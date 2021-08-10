@@ -11,6 +11,9 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@tsconfig/svelte": "^2.0.0",
+    "@types/lodash.clonedeep": "^4.5.6",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -19,14 +22,13 @@
     "svelte": "^3.0.0",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
-    "@rollup/plugin-typescript": "^8.0.0",
-    "typescript": "^4.0.0",
     "tslib": "^2.0.0",
-    "@tsconfig/svelte": "^2.0.0"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "mini-rx-store": "^3.0.0-rc.1",
     "rxjs": "^6.6.7",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "lodash.clonedeep": "^4.5.0"
   }
 }

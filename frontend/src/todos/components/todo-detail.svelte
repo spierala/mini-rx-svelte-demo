@@ -2,31 +2,19 @@
     import {todoStore} from "../stores";
     import { Todo } from '../models/todo';
 
-    export let todo;
+    export let todo: Todo;
 
-    function onSubmit(e) {
-        const formData = new FormData(e.target);
-        const formValue = {};
-        for (let field of formData) {
-            const [key, value] = field;
-            formValue[key] = value;
-        }
-
-        const newTodo: Todo = {
-            ...todo,
-            ...formValue,
-        };
-
-        if (newTodo.id) {
-            todoStore.update(newTodo);
+    function onSubmit() {
+        if (todo.id) {
+            todoStore.update(todo);
         } else {
-            todoStore.create(newTodo);
+            todoStore.create(todo);
         }
     }
 </script>
 
 <form on:submit|preventDefault={onSubmit}>
     <label>Name</label>
-    <input type="text" name="title" value={todo.title} />
+    <input type="text" name="title" bind:value={todo.title} />
     <button type="submit">Submit</button>
 </form>
