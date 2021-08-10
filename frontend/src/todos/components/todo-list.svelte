@@ -1,19 +1,45 @@
 <script>
+    import TodoDetail from './todo-detail.svelte';
     import {todoStore} from "../stores";
+    import {tap} from "rxjs/operators";
 
-    const todos$ = todoStore.todosDone$;
+    const todosDone$ = todoStore.todosDone$;
+    const todosNotDone$ = todoStore.todosNotDone$;
+    const selectedTodo$ = todoStore.selectedTodo$.pipe(
+        tap(console.log)
+    );
 
-    function handleClick() {
-        todoStore.create({title: 'bla', id: 2, isDone: true})
+    function selectTodo(todo) {
+        todoStore.selectTodo(todo);
+    }
+
+    function addTodo() {
+        todoStore.initNewTodo();
+    }
+
+    function deleteTodo(todo) {
+        todoStore.delete(todo);
     }
 </script>
 
-<button on:click={handleClick}>
-    Create
+<button on:click={addTodo}>
+    New
 </button>
 
-{#each $todos$ as todo}
-    <div>
-        <span>{todo.title}</span>
-    </div>
+<h1>Todos Done</h1>
+{#each $todosDone$ as todo}
+    <ul>
+        <li on:click={selectTodo(todo)}>{todo.title}</li>
+    </ul>
 {/each}
+
+<h1>Todos Not Done</h1>
+{#each $todosNotDone$ as todo}
+    <ul>
+        <li on:click={selectTodo(todo)}>{todo.title} <button on:click|stopPropagation={deleteTodo(todo)}>[delete]</button></li>
+    </ul>
+{/each}
+
+{#if $selectedTodo$ }
+    <TodoDetail todo="{$selectedTodo$}"></TodoDetail>
+{/if}
