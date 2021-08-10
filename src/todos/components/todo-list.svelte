@@ -1,10 +1,10 @@
 <script>
-    import {todoState} from "../../main";
+    import {todoStore} from "../stores";
 
-    const todos$ = todoState.todosDone$;
+    const todos$ = todoStore.todosDone$;
 
     function handleClick() {
-        todoState.create({title: 'bla', id: 2, isDone: true})
+        todoStore.create({title: 'bla', id: 2, isDone: true})
     }
 </script>
 
