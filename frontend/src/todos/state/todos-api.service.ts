@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 
-const apiUrl = 'api/todos/';
+const apiUrl = 'http://localhost:1337/todos/';
 
 export class TodosApiService {
     constructor() {}

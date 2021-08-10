@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "todos",
+  "info": {
+    "name": "todo"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "isDone": {
+      "type": "boolean"
+    },
+    "isBusiness": {
+      "type": "boolean"
+    },
+    "isPrivate": {
+      "type": "boolean"
+    }
+  }
+}
