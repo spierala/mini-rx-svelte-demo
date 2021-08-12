@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Router, Link, Route } from "svelte-routing";
 	import TodoList from './modules/todo/components/todo-list.svelte';
-	import ProductShell from './modules/product/components/product-shell.svelte';
+	import ProductShell from './modules/product/components/product-list.svelte';
 </script>
 
 <Router url="todos">

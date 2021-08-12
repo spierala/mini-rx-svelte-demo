@@ -30,6 +30,8 @@
     "mini-rx-store": "^3.0.0-rc.1",
     "rxjs": "^6.6.7",
     "sirv-cli": "^1.0.0",
-    "svelte-routing": "^1.6.0"
+    "svelte-routing": "^1.6.0",
+    "ts-action": "^11.0.0",
+    "ts-action-operators": "^9.1.2"
   }
 }
