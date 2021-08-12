@@ -2,13 +2,12 @@
     import ProductDetail from './product-detail.svelte';
     import facade from "../state/product-facade.service";
     import clonedeep from 'lodash.clonedeep';
-    import { map, tap } from 'rxjs/operators';
+    import { map } from 'rxjs/operators';
     import { Observable } from 'rxjs';
     import { Product } from '../models/product';
 
     const products$: Observable<Product[]> = facade.products$;
     const selectedProduct$: Observable<Product> = facade.selectedProduct$.pipe(
-        tap(console.log),
         map(clonedeep), // Prevent mutating the state
     );
 

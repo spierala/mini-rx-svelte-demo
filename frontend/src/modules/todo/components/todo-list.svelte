@@ -2,12 +2,11 @@
     import TodoDetail from './todo-detail.svelte';
     import {todosStore} from "../../../stores";
     import clonedeep from 'lodash.clonedeep';
-    import { map, tap } from 'rxjs/operators';
+    import { map } from 'rxjs/operators';
 
     const todosDone$ = todosStore.todosDone$;
     const todosNotDone$ = todosStore.todosNotDone$;
     const selectedTodo$ = todosStore.selectedTodo$.pipe(
-        tap(console.log),
         map(clonedeep), // Prevent mutating the state
     );
 
