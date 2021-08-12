@@ -16,5 +16,11 @@
 <form on:submit|preventDefault={onSubmit}>
     <label>Name</label>
     <input type="text" name="title" bind:value={todo.title} />
+    <div>
+        <input type="checkbox" id="isDone" name="isDone"
+               bind:checked={todo.isDone}>
+        <label for="isDone">Done</label>
+    </div>
+
     <button type="submit">Submit</button>
 </form>
