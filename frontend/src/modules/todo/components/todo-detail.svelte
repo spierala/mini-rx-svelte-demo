@@ -1,14 +1,14 @@
 <script lang="ts">
-    import {todoStore} from "../stores";
+    import {todosStore} from "../../../stores";
     import { Todo } from '../models/todo';
 
     export let todo: Todo;
 
     function onSubmit() {
         if (todo.id) {
-            todoStore.update(todo);
+            todosStore.update(todo);
         } else {
-            todoStore.create(todo);
+            todosStore.create(todo);
         }
     }
 </script>

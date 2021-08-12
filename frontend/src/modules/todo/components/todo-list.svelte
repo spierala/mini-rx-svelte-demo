@@ -1,25 +1,25 @@
 <script lang="ts">
     import TodoDetail from './todo-detail.svelte';
-    import {todoStore} from "../stores";
+    import {todosStore} from "../../../stores";
     import clonedeep from 'lodash.clonedeep';
     import {map} from "rxjs/operators";
 
-    const todosDone$ = todoStore.todosDone$;
-    const todosNotDone$ = todoStore.todosNotDone$;
-    const selectedTodo$ = todoStore.selectedTodo$.pipe(
+    const todosDone$ = todosStore.todosDone$;
+    const todosNotDone$ = todosStore.todosNotDone$;
+    const selectedTodo$ = todosStore.selectedTodo$.pipe(
         map(clonedeep), // Prevent mutating the state
     );
 
     function selectTodo(todo) {
-        todoStore.selectTodo(todo);
+        todosStore.selectTodo(todo);
     }
 
     function addTodo() {
-        todoStore.initNewTodo();
+        todosStore.initNewTodo();
     }
 
     function deleteTodo(todo) {
-        todoStore.delete(todo);
+        todosStore.delete(todo);
     }
 </script>
 

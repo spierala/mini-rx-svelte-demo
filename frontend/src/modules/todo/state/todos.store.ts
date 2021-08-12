@@ -4,7 +4,7 @@ import { Filter } from '../models/filter';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { Action, createFeatureSelector, createSelector, FeatureStore } from 'mini-rx-store';
-import { TodosApiService } from './todos-api.service';
+import { TodosApiService } from '../services/todos-api.service';
 
 // STATE INTERFACE
 interface TodoState {
@@ -69,7 +69,7 @@ const getSelectedTodo = createSelector(
 
 const apiService: TodosApiService = new TodosApiService();
 
-export class TodoStore extends FeatureStore<TodoState> {
+export class TodosStore extends FeatureStore<TodoState> {
     // STATE OBSERVABLES
     todosDone$: Observable<Todo[]> = this.select(getTodosDone);
     todosNotDone$: Observable<Todo[]> = this.select(getTodosNotDone);

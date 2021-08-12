@@ -5,10 +5,9 @@ import {
     ReduxDevtoolsExtension,
     UndoExtension
 } from 'mini-rx-store';
-import { TodoStore } from './state/todo.store';
+import { TodosStore } from './modules/todo/state/todos.store';
 
-// Important: Call configureStore before initializing any FeatureStores!
-configureStore({
+const store = configureStore({
     extensions: [
         new ReduxDevtoolsExtension({}),
         new UndoExtension(),
@@ -17,4 +16,4 @@ configureStore({
     ]
 });
 
-export const todoStore = new TodoStore();
+export const todosStore = new TodosStore();
