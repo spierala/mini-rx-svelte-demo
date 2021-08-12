@@ -1,6 +1,5 @@
-
 import * as fromProducts from './product.reducer';
-import { createFeatureSelector, createSelector, Store } from 'mini-rx-store';
+import { createFeatureSelector, createSelector } from 'mini-rx-store';
 import {
     clearCurrentProduct,
     createProduct,
@@ -21,8 +20,10 @@ import { store } from '../../../stores';
 import { ProductEffects } from './product.effects';
 import { productReducer } from './product.reducer';
 
+const productFeatureKey = 'products';
+
 // Selector functions
-const getProductFeatureState = createFeatureSelector<fromProducts.ProductState>('products');
+const getProductFeatureState = createFeatureSelector<fromProducts.ProductState>(productFeatureKey);
 const getShowProductCode = createSelector(getProductFeatureState, (state) => state.showProductCode);
 const getCurrentProductId = createSelector(
     getProductFeatureState,
@@ -98,7 +99,7 @@ export class ProductFacadeService {
 
     constructor() {
         const effects = new ProductEffects();
-        store.feature('products', productReducer);
+        store.feature(productFeatureKey, productReducer);
 
         this.load();
     }
