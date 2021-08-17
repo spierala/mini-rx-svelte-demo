@@ -1,5 +1,6 @@
 <script lang="ts">
     import TodoDetail from './todo-detail.svelte';
+    import TodoFilter from './todo-filter.svelte';
     import {todosStore} from "../../../stores";
     import clonedeep from 'lodash.clonedeep';
     import { map } from 'rxjs/operators';
@@ -7,6 +8,9 @@
     const todosDone$ = todosStore.todosDone$;
     const todosNotDone$ = todosStore.todosNotDone$;
     const selectedTodo$ = todosStore.selectedTodo$.pipe(
+        map(clonedeep), // Prevent mutating the state
+    );
+    const filter$ = todosStore.filter$.pipe(
         map(clonedeep), // Prevent mutating the state
     );
 
@@ -27,10 +31,12 @@
     New
 </button>
 
+<TodoFilter filter="{$filter$}"></TodoFilter>
+
 <h1>Todos Done</h1>
 {#each $todosDone$ as todo}
     <ul>
-        <li on:click={selectTodo(todo)}>{todo.title}</li>
+        <li on:click={selectTodo(todo)}>{todo.title} b: {todo.isBusiness} p: {todo.isPrivate}</li>
     </ul>
 {/each}
 

@@ -2,7 +2,7 @@
 import { Todo } from '../models/todo';
 import { Filter } from '../models/filter';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, debounce, debounceTime, mergeMap, tap } from 'rxjs/operators';
 import { Action, createFeatureSelector, createSelector, FeatureStore } from 'mini-rx-store';
 import { TodosApiService } from '../services/todos-api.service';
 
@@ -100,21 +100,55 @@ export class TodosStore extends FeatureStore<TodoState> {
         );
     }
 
-    updateFilter(filter: Filter) {
-        this.setState(
-            {
-                filter: {
-                    ...this.state.filter,
-                    ...filter,
-                },
-            },
-            'updateFilter'
-        );
+    // updateFilter(filter: Filter) {
+    //     this.setState(
+    //         {
+    //             filter: {
+    //                 ...this.state.filter,
+    //                 ...filter,
+    //             },
+    //         },
+    //         'updateFilter'
+    //     );
+    // }
+
+    toggleIsPrivate() {
+        this.setState(state => ({
+            filter: {
+                ...state.filter,
+                category: {
+                    ...state.filter.category,
+                    isPrivate: !state.filter.category.isPrivate
+                }
+            }
+        }))
     }
+
+    toggleIsBusiness() {
+        this.setState(state => ({
+            filter: {
+                ...state.filter,
+                category: {
+                    ...state.filter.category,
+                    isBusiness: !state.filter.category.isBusiness
+                }
+            }
+        }))
+    }
+
+    search = this.effect<string>(payload$ => payload$.pipe(
+        debounceTime(350),
+        tap(search => this.setState(state => ({
+            filter: {
+                ...state.filter,
+                search: search
+            }
+        })))
+    ))
 
     // API CALLS...
     // ...with effect
-    load = this.effect((payload$) => {
+    load = this.effect<void>((payload$) => {
         return payload$.pipe(
             mergeMap(() =>
                 apiService.getTodos().pipe(
