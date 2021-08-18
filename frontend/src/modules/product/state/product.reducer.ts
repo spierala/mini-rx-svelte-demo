@@ -38,7 +38,7 @@ const initialState: ProductState = {
     search: '',
     cart: [
         {
-            productId: 1,
+            productId: 7,
             amount: 1,
         },
     ],

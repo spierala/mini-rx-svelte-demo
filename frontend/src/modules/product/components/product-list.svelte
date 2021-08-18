@@ -10,28 +10,19 @@
     const selectedProduct$: Observable<Product> = facade.selectedProduct$.pipe(
         map(clonedeep), // Prevent mutating the state
     );
-
-    function selectProduct(product: Product) {
-        facade.productSelected(product);
-    }
-
-    function addProduct() {
-        facade.newProduct();
-    }
-
-    function deleteProduct(product: Product) {
-        facade.delete(product);
-    }
 </script>
 
-<button on:click={addProduct}>
+<button on:click={facade.newProduct}>
     New
 </button>
 
 <h1>Products</h1>
 {#each $products$ as product}
     <ul>
-        <li on:click={selectProduct(product)}>{product.productName} <button on:click|stopPropagation={deleteProduct(product)}>[delete]</button></li>
+        <li on:click={facade.selectProduct(product)}>{product.productName}
+            <button on:click|stopPropagation={facade.delete(product)}>[delete]</button>
+            <button on:click|stopPropagation={facade.addProductToCart(product)}>[addToCart]</button>
+        </li>
     </ul>
 {/each}
 

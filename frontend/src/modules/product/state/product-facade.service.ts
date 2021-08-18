@@ -116,7 +116,7 @@ export class ProductFacadeService {
         store.dispatch(initializeCurrentProduct());
     }
 
-    productSelected(product: Product): void {
+    selectProduct(product: Product): void {
         store.dispatch(setCurrentProduct(product));
     }
 
