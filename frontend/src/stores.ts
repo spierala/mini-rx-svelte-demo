@@ -7,6 +7,7 @@ import {
 } from 'mini-rx-store';
 import { TodosStore } from './modules/todo/state/todos.store';
 
+// Store
 export const store = configureStore({
     extensions: [
         new ReduxDevtoolsExtension({}),
@@ -16,4 +17,5 @@ export const store = configureStore({
     ]
 });
 
+// Feature Stores
 export const todosStore = new TodosStore();
