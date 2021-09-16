@@ -45,11 +45,12 @@
                     <div class="card-header">
                         <span>Todos</span>
                     </div>
-                    {#each $todosNotDone$ as todo}
+
                         <ul>
+                            {#each $todosNotDone$ as todo}
                             <li on:click={selectTodo(todo)}>{todo.title} <button on:click|stopPropagation={deleteTodo(todo)}>[delete]</button></li>
+                            {/each}
                         </ul>
-                    {/each}
                 </div>
             </div>
             <div class="col">
@@ -57,11 +58,12 @@
                     <div class="card-header">
                         <span>Todos Done</span>
                     </div>
-                    {#each $todosDone$ as todo}
+
                         <ul>
+                            {#each $todosDone$ as todo}
                             <li on:click={selectTodo(todo)}>{todo.title} b: {todo.isBusiness} p: {todo.isPrivate}</li>
+                            {/each}
                         </ul>
-                    {/each}
                 </div>
             </div>
             {#if $selectedTodo$ }

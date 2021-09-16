@@ -17,14 +17,14 @@
 </button>
 
 <h1>Products</h1>
-{#each $products$ as product}
     <ul>
+        {#each $products$ as product}
         <li on:click={facade.selectProduct(product)}>{product.productName}
             <button on:click|stopPropagation={facade.delete(product)}>[delete]</button>
             <button on:click|stopPropagation={facade.addProductToCart(product)}>[addToCart]</button>
         </li>
+        {/each}
     </ul>
-{/each}
 
 {#if $selectedProduct$ }
     <ProductDetail product="{$selectedProduct$}"></ProductDetail>

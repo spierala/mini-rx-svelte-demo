@@ -1,17 +1,22 @@
 <script lang="ts">
 	import Router, { link } from 'svelte-spa-router';
 	import active from 'svelte-spa-router/active'
-	import TodoList from './modules/todo/components/todo-list.svelte';
-	import ProductShell from './modules/product/components/product-list.svelte';
+	import {wrap} from 'svelte-spa-router/wrap'
 	import facade from "./modules/product/state/product-facade.service";
 	import { Observable } from 'rxjs';
 
 	const cartItemsAmount$: Observable<number> = facade.cartItemsAmount$;
 
 	const routes = {
-		'/': TodoList,
-		'/products': ProductShell,
-		'*': TodoList,
+		'/': wrap({
+			asyncComponent: () => import('./modules/todo/components/todo-list.svelte')
+		}),
+		'/products': wrap({
+			asyncComponent: () => import('./modules/product/components/product-list.svelte')
+		}),
+		'/cart': wrap({
+			asyncComponent: () => import('./modules/cart/components/cart-list.svelte')
+		}),
 	}
 </script>
 
@@ -28,6 +33,15 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/products" use:link use:link use:active={{className: 'active'}}>Products</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link d-flex align-items-center" href="/cart" use:link use:link use:active={{className: 'active'}}>
+						<i class="bi bi-cart-fill mr-1"></i>
+						<span class="mr-2">Cart</span>
+						<span class="badge badge-light">
+                        { $cartItemsAmount$ }
+                    </span>
+					</a>
 				</li>
 			</ul>
 		</nav>

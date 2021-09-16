@@ -4,26 +4,56 @@
     import { Observable } from 'rxjs';
 
     const cartItems$: Observable<CartItem[]> = facade.cartItems$;
+    const hasCartItems$: Observable<boolean> = facade.hasCartItems$;
+    const cartTotalPrice$: Observable<number> = facade.cartTotalPrice$;
 </script>
 
-<h1>Cart</h1>
-{#each $cartItems$ as cartItem}
-    <ul>
-        <li>
-            <div class="flex-grow-1">
-                { cartItem.productName }
-                <span class="badge badge-primary badge-pill">
-                                    { cartItem.amount }
-                                </span>
-            </div>
-            <div class="mr-2">
-                { cartItem.total }
-            </div>
+<div class="d-flex flex-column h-100">
+    <nav class="navbar navbar-light bg-light mb-4">
+        <a class="navbar-brand">
+            Cart
+        </a>
+    </nav>
 
-            <span
-                    class="btn bi bi-trash-fill text-danger"
-                    on:click="{facade.removeProductFromCart(cartItem)}"
-            ></span>
-        </li>
-    </ul>
-{/each}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {#if $hasCartItems$}
+                    <div class="card-header d-flex">
+                        <span class="flex-grow-1">Your shopping cart</span>
+                    </div>
+                    <ul class="list-group">
+                        {#each $cartItems$ as item}
+                        <li
+                                class="list-group-item d-flex align-items-center"
+                        >
+                            <div class="flex-grow-1">
+                                { item.productName }
+                                <span class="badge badge-primary badge-pill">
+                                    { item.amount }
+                                </span>
+                            </div>
+                            <div class="mr-2">
+                                { item.total }
+                            </div>
+
+                            <span
+                                    class="btn bi bi-trash-fill text-danger"
+                                    on:click="{facade.removeProductFromCart(item)}"
+                            ></span>
+                        </li>
+                        {/each}
+                    </ul>
+                    <div class="card-footer">
+                        <h5>Total: { $cartTotalPrice$ }</h5>
+                    </div>
+
+                {:else}
+                    <h5 class="text-center text-muted">
+                        There is nothing in your shopping cart.
+                    </h5>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
