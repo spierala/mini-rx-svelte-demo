@@ -5,6 +5,8 @@ import {
     ReduxDevtoolsExtension,
     UndoExtension
 } from 'mini-rx-store';
+import { TodosStore } from './modules/todo/state/todos.store';
+import { UserStore } from './modules/user/state/user-state.service';
 
 // Store
 export const store = configureStore({
@@ -15,3 +17,6 @@ export const store = configureStore({
         new ImmutableStateExtension()
     ]
 });
+
+// Feature Store Instances
+export const userStore: UserStore = new UserStore();

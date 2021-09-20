@@ -69,7 +69,7 @@ const getSelectedTodo = createSelector(
 
 const apiService: TodosApiService = new TodosApiService();
 
-export class TodosStore extends FeatureStore<TodoState> {
+class TodosStore extends FeatureStore<TodoState> {
     // STATE OBSERVABLES
     todosDone$: Observable<Todo[]> = this.select(getTodosDone);
     todosNotDone$: Observable<Todo[]> = this.select(getTodosNotDone);

@@ -149,4 +149,4 @@ export class ProductFacadeService {
     }
 }
 
-export default new ProductFacadeService()
+export const productState = new ProductFacadeService();

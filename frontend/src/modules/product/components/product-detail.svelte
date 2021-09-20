@@ -1,14 +1,14 @@
 <script lang="ts">
-    import facade from "../state/product-facade.service";
+    import { productState } from "../state/product-facade.service";
     import { Product } from '../models/product';
 
     export let product: Product;
 
     function onSubmit() {
         if (product.id) {
-            facade.update(product);
+            productState.update(product);
         } else {
-            facade.create(product);
+            productState.create(product);
         }
     }
 </script>

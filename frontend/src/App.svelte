@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { userStore } from './stores';
 	import Router, { link } from 'svelte-spa-router';
 	import active from 'svelte-spa-router/active'
 	import {wrap} from 'svelte-spa-router/wrap'
-	import facade from "./modules/product/state/product-facade.service";
+	import UserShell from "./modules/user/components/user-shell.svelte";
 	import { Observable } from 'rxjs';
+	import {productState} from "./modules/product/state/product-facade.service";
 
-	const cartItemsAmount$: Observable<number> = facade.cartItemsAmount$;
+	const cartItemsAmount$: Observable<number> = productState.cartItemsAmount$;
+	const userFullName$ = userStore.userFullName$;
 
 	const routes = {
 		'/': wrap({
@@ -20,6 +23,7 @@
 		'/counter': wrap({
 			asyncComponent: () => import('./modules/counter/components/counter-shell.svelte')
 		}),
+		'/user': UserShell,
 	}
 </script>
 
@@ -37,8 +41,14 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/products" use:link use:link use:active={{className: 'active'}}>Products</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item  mr-auto">
 					<a class="nav-link" href="/counter" use:link use:link use:active={{className: 'active'}}>Counter</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link d-flex align-items-center" href="/user" use:link use:link use:active={{className: 'active'}}>
+						<i class="bi bi-person-circle mr-1"></i>
+						{ $userFullName$ }
+					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link d-flex align-items-center" href="/cart" use:link use:link use:active={{className: 'active'}}>
