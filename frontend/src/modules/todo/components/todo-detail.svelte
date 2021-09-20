@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { todosStore } from '../../../stores';
     import { Todo } from '../models/todo';
+    import { todosStore } from '../state/todos.store';
 
     export let todo: Todo;
 

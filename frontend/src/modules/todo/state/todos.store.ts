@@ -222,3 +222,5 @@ export class TodosStore extends FeatureStore<TodoState> {
         });
     }
 }
+
+export const todosStore = new TodosStore();

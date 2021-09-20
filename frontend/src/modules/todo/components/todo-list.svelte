@@ -1,7 +1,7 @@
 <script lang="ts">
     import TodoDetail from './todo-detail.svelte';
     import TodoFilter from './todo-filter.svelte';
-    import {todosStore} from "../../../stores";
+    import { todosStore } from '../state/todos.store';
     import clonedeep from 'lodash.clonedeep';
     import { map } from 'rxjs/operators';
 

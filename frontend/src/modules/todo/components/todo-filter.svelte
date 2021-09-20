@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { todosStore } from '../../../stores';
+    import { todosStore } from '../state/todos.store';
     import { Filter } from '../models/filter';
 
     export let filter: Filter;

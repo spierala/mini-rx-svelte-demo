@@ -5,7 +5,6 @@ import {
     ReduxDevtoolsExtension,
     UndoExtension
 } from 'mini-rx-store';
-import { TodosStore } from './modules/todo/state/todos.store';
 
 // Store
 export const store = configureStore({
@@ -16,6 +15,3 @@ export const store = configureStore({
         new ImmutableStateExtension()
     ]
 });
-
-// Feature Stores
-export const todosStore = new TodosStore();
