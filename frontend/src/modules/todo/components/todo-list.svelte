@@ -1,76 +1,27 @@
 <script lang="ts">
-    import TodoDetail from './todo-detail.svelte';
-    import TodoFilter from './todo-filter.svelte';
-    import { todosStore } from '../state/todos.store';
-    import clonedeep from 'lodash.clonedeep';
-    import { map } from 'rxjs/operators';
 
-    const todosDone$ = todosStore.todosDone$;
-    const todosNotDone$ = todosStore.todosNotDone$;
-    const selectedTodo$ = todosStore.selectedTodo$.pipe(
-        map(clonedeep), // Prevent mutating the state
-    );
-    const filter$ = todosStore.filter$.pipe(
-        map(clonedeep), // Prevent mutating the state
-    );
+import { Todo } from '../models/todo';
+import { createEventDispatcher } from 'svelte';
 
-    function selectTodo(todo) {
-        todosStore.selectTodo(todo);
-    }
+export let todos: Todo[];
+export let selectedTodo: Todo;
 
-    function addTodo() {
-        todosStore.initNewTodo();
-    }
+const dispatch = createEventDispatcher();
 
-    function deleteTodo(todo) {
-        todosStore.delete(todo);
-    }
+function selectTodo(todo: Todo) {
+    dispatch('selectTodo', {
+        todo
+    });
+}
+
 </script>
-
-<div class="d-flex flex-column h-100">
-    <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand">
-            Todos
-        </a>
-        <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
-            <button class="btn btn-primary btn-sm" on:click={addTodo}>New</button>
-            <TodoFilter filter="{$filter$}"></TodoFilter>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <span>Todos</span>
-                    </div>
-
-                        <ul>
-                            {#each $todosNotDone$ as todo}
-                            <li on:click={selectTodo(todo)}>{todo.title} <button on:click|stopPropagation={deleteTodo(todo)}>[delete]</button></li>
-                            {/each}
-                        </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <span>Todos Done</span>
-                    </div>
-
-                        <ul>
-                            {#each $todosDone$ as todo}
-                            <li on:click={selectTodo(todo)}>{todo.title} b: {todo.isBusiness} p: {todo.isPrivate}</li>
-                            {/each}
-                        </ul>
-                </div>
-            </div>
-            {#if $selectedTodo$ }
-                <div class="col">
-                    <TodoDetail todo="{$selectedTodo$}"></TodoDetail>
-                </div>
-            {/if}
-        </div>
-    </div>
-</div>
+<ul class="list-group">
+    {#each todos as todo}
+        <li class="list-group-item"
+            class:active="{selectedTodo?.id === todo.id}"
+            on:click={selectTodo(todo)}> { todo.title }
+            {#if todo.isBusiness}<span class="badge badge-info mr-1">Business</span>{/if}
+            {#if todo.isPrivate}<span class="badge badge-primary">Private</span>{/if}
+        </li>
+    {/each}
+</ul>

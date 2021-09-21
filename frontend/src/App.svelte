@@ -12,7 +12,7 @@
 
 	const routes = {
 		'/': wrap({
-			asyncComponent: () => import('./modules/todo/components/todo-list.svelte')
+			asyncComponent: () => import('./modules/todo/components/todo-shell.svelte')
 		}),
 		'/products': wrap({
 			asyncComponent: () => import('./modules/product/components/product-list.svelte')
