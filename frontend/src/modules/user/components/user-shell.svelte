@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { userStore } from '../state/user-state.service';
+    import { userStore } from '../../../stores';
     import UserForm from '../components/user-form.svelte';
     import { Observable } from 'rxjs';
     import  type { User, Permissions } from '../state/user-state.service';

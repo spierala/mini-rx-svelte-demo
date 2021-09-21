@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { userStore } from '../state/user-state.service';
     import  type { User, Permissions } from '../state/user-state.service';
+    import { userStore } from '../../../stores';
 
     export let user: User;
     export let permissions: Permissions;
