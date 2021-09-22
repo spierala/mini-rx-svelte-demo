@@ -15,7 +15,7 @@
 			asyncComponent: () => import('./modules/todo/components/todo-shell.svelte')
 		}),
 		'/products': wrap({
-			asyncComponent: () => import('./modules/product/components/product-list.svelte')
+			asyncComponent: () => import('./modules/product/components/product-shell.svelte')
 		}),
 		'/cart': wrap({
 			asyncComponent: () => import('./modules/cart/components/cart-list.svelte')
