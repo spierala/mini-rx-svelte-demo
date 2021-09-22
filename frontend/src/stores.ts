@@ -5,7 +5,6 @@ import {
     ReduxDevtoolsExtension,
     UndoExtension
 } from 'mini-rx-store';
-import { TodosStore } from './modules/todo/state/todos.store';
 import { UserStore } from './modules/user/state/user-state.service';
 
 // Store
