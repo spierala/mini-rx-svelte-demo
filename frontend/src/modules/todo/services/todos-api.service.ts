@@ -9,11 +9,11 @@ export class TodosApiService {
     constructor() {}
 
     getTodos(): Observable<Todo[]> {
-        return ajax.get(apiUrl).pipe(map(res => res.response));
+        return ajax.get<Todo[]>(apiUrl).pipe(map(res => res.response));
     }
 
     createTodo(todo: Todo): Observable<Todo> {
-        return ajax.post(apiUrl, todo).pipe(
+        return ajax.post<Todo>(apiUrl, todo).pipe(
             map((res) => {
                 return res.response;
             })
@@ -21,10 +21,10 @@ export class TodosApiService {
     }
 
     updateTodo(todo: Todo): Observable<Todo> {
-        return ajax.put(apiUrl + todo.id, todo).pipe(map(res => res.response));
+        return ajax.put<Todo>(apiUrl + todo.id, todo).pipe(map(res => res.response));
     }
 
-    deleteTodo(todo: Todo): Observable<AjaxResponse> {
+    deleteTodo(todo: Todo): Observable<AjaxResponse<void>> {
         return ajax.delete(apiUrl + todo.id);
     }
 }
