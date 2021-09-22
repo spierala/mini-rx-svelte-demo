@@ -9,10 +9,10 @@
     const todosDone$ = todosStore.todosDone$;
     const todosNotDone$ = todosStore.todosNotDone$;
     const selectedTodo$ = todosStore.selectedTodo$.pipe(
-        map(clonedeep), // Prevent mutating the state
+        map(clonedeep) // Prevent mutating the state
     );
     const filter$ = todosStore.filter$.pipe(
-        map(clonedeep), // Prevent mutating the state
+        map(clonedeep) // Prevent mutating the state
     );
 
     function selectTodo(event) {
@@ -26,12 +26,10 @@
 
 <div class="d-flex flex-column h-100">
     <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand">
-            Todos
-        </a>
+        <a class="navbar-brand">Todos</a>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <button class="btn btn-primary btn-sm" on:click={addTodo}>New</button>
-            <TodoFilter filter="{$filter$}"></TodoFilter>
+            <TodoFilter filter={$filter$} />
         </div>
     </nav>
 
@@ -42,7 +40,11 @@
                     <div class="card-header">
                         <span>Todos</span>
                     </div>
-                    <TodoList todos="{$todosNotDone$}" selectedTodo="{$selectedTodo$}" on:selectTodo={selectTodo}></TodoList>
+                    <TodoList
+                        todos={$todosNotDone$}
+                        selectedTodo={$selectedTodo$}
+                        on:selectTodo={selectTodo}
+                    />
                 </div>
             </div>
             <div class="col">
@@ -50,12 +52,16 @@
                     <div class="card-header">
                         <span>Todos Done</span>
                     </div>
-                    <TodoList todos="{$todosDone$}" selectedTodo="{$selectedTodo$}" on:selectTodo={selectTodo}></TodoList>
+                    <TodoList
+                        todos={$todosDone$}
+                        selectedTodo={$selectedTodo$}
+                        on:selectTodo={selectTodo}
+                    />
                 </div>
             </div>
-            {#if $selectedTodo$ }
+            {#if $selectedTodo$}
                 <div class="col">
-                    <TodoDetail todo="{$selectedTodo$}"></TodoDetail>
+                    <TodoDetail todo={$selectedTodo$} />
                 </div>
             {/if}
         </div>

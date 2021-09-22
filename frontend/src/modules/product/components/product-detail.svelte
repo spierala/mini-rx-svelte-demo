@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { productState } from "../state/product-facade.service";
+    import { productState } from '../state/product-facade.service';
     import { Product } from '../models/product';
 
     export let product: Product;

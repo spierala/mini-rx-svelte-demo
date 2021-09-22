@@ -19,7 +19,7 @@ export class CounterStateService extends FeatureStore<CounterState> {
         super('counter-' + id++, initialState);
 
         onDestroy(() => {
-            this.destroy()
+            this.destroy();
         });
     }
 

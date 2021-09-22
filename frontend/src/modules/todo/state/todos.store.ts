@@ -1,4 +1,3 @@
-
 import { Todo } from '../models/todo';
 import { Filter } from '../models/filter';
 import { EMPTY, Observable } from 'rxjs';
@@ -16,13 +15,15 @@ interface TodoState {
 
 // INITIAL STATE
 const initialState: TodoState = {
-    todos: [{
-        id: 1,
-        isDone: true,
-        isPrivate: false,
-        isBusiness: false,
-        title: 'todo 1'
-    }],
+    todos: [
+        {
+            id: 1,
+            isDone: true,
+            isPrivate: false,
+            isBusiness: false,
+            title: 'todo 1',
+        },
+    ],
     selectedTodoId: undefined,
     filter: {
         search: '',
@@ -113,38 +114,42 @@ class TodosStore extends FeatureStore<TodoState> {
     // }
 
     toggleIsPrivate() {
-        this.setState(state => ({
+        this.setState((state) => ({
             filter: {
                 ...state.filter,
                 category: {
                     ...state.filter.category,
-                    isPrivate: !state.filter.category.isPrivate
-                }
-            }
-        }))
+                    isPrivate: !state.filter.category.isPrivate,
+                },
+            },
+        }));
     }
 
     toggleIsBusiness() {
-        this.setState(state => ({
+        this.setState((state) => ({
             filter: {
                 ...state.filter,
                 category: {
                     ...state.filter.category,
-                    isBusiness: !state.filter.category.isBusiness
-                }
-            }
-        }))
+                    isBusiness: !state.filter.category.isBusiness,
+                },
+            },
+        }));
     }
 
-    search = this.effect<string>(payload$ => payload$.pipe(
-        debounceTime(350),
-        tap(search => this.setState(state => ({
-            filter: {
-                ...state.filter,
-                search: search
-            }
-        })))
-    ))
+    search = this.effect<string>((payload$) =>
+        payload$.pipe(
+            debounceTime(350),
+            tap((search) =>
+                this.setState((state) => ({
+                    filter: {
+                        ...state.filter,
+                        search: search,
+                    },
+                }))
+            )
+        )
+    );
 
     // API CALLS...
     // ...with effect
@@ -188,7 +193,7 @@ class TodosStore extends FeatureStore<TodoState> {
                     );
                 }),
                 catchError(() => {
-                        this.undo(optimisticUpdate);
+                    this.undo(optimisticUpdate);
                     return EMPTY;
                 })
             );

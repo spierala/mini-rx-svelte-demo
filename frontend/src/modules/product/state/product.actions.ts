@@ -28,4 +28,7 @@ export const deleteProductFail = action('[Product] Delete Product Fail', payload
 
 export const updateSearch = action('[Product] Update Search', payload<string>());
 export const addProductToCart = action('[Product] Add Product To Cart', payload<number>());
-export const removeProductFromCart = action('[Product] Remove Product From Cart', payload<number>());
+export const removeProductFromCart = action(
+    '[Product] Remove Product From Cart',
+    payload<number>()
+);

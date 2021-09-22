@@ -9,7 +9,7 @@ class ProductsApiService {
     constructor() {}
 
     getProducts(): Observable<Product[]> {
-        return ajax.get<Product[]>(apiUrl).pipe(map(res => res.response));
+        return ajax.get<Product[]>(apiUrl).pipe(map((res) => res.response));
     }
 
     createProduct(todo: Product): Observable<Product> {
@@ -21,7 +21,7 @@ class ProductsApiService {
     }
 
     updateProduct(todo: Product): Observable<Product> {
-        return ajax.put<Product>(apiUrl + todo.id, todo).pipe(map(res => res.response));
+        return ajax.put<Product>(apiUrl + todo.id, todo).pipe(map((res) => res.response));
     }
 
     deleteProduct(id: number): Observable<AjaxResponse<void>> {

@@ -9,7 +9,7 @@ export class TodosApiService {
     constructor() {}
 
     getTodos(): Observable<Todo[]> {
-        return ajax.get<Todo[]>(apiUrl).pipe(map(res => res.response));
+        return ajax.get<Todo[]>(apiUrl).pipe(map((res) => res.response));
     }
 
     createTodo(todo: Todo): Observable<Todo> {
@@ -21,7 +21,7 @@ export class TodosApiService {
     }
 
     updateTodo(todo: Todo): Observable<Todo> {
-        return ajax.put<Todo>(apiUrl + todo.id, todo).pipe(map(res => res.response));
+        return ajax.put<Todo>(apiUrl + todo.id, todo).pipe(map((res) => res.response));
     }
 
     deleteTodo(todo: Todo): Observable<AjaxResponse<void>> {

@@ -3,7 +3,7 @@ import {
     ImmutableStateExtension,
     LoggerExtension,
     ReduxDevtoolsExtension,
-    UndoExtension
+    UndoExtension,
 } from 'mini-rx-store';
 import { UserStore } from './modules/user/state/user-state.service';
 
@@ -13,8 +13,8 @@ export const store = configureStore({
         new ReduxDevtoolsExtension({}),
         new UndoExtension(),
         new LoggerExtension(),
-        new ImmutableStateExtension()
-    ]
+        new ImmutableStateExtension(),
+    ],
 });
 
 // Feature Store Instances
