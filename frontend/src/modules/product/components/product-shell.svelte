@@ -8,6 +8,7 @@
     import { userStore } from '../../../stores';
     import type { Permissions } from '../../user/state/user-state.service';
     import ProductList from './product-list.svelte';
+    import ProductFilter from './product-filter.svelte';
 
     const products$: Observable<Product[]> = productState.products$;
     const selectedProduct$: Observable<Product> = productState.selectedProduct$.pipe(
@@ -15,19 +16,19 @@
     );
 
     const permissions$: Observable<Permissions> = userStore.permissions$;
+    const search$: Observable<string> = productState.search$;
 </script>
 
 <div class="d-flex flex-column h-100">
     <nav class="navbar navbar-light bg-light mb-4">
         <a class="navbar-brand">Products</a>
-        <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
-            <div>
+        <div class="d-flex flex-grow-1 mb-2 justify-content-end mt-2">
                 {#if $permissions$.canUpdateProducts}
                     <button class="btn btn-primary btn-sm" on:click={productState.newProduct}>
                         New
                     </button>
                 {/if}
-            </div>
+                <ProductFilter search="{$search$}"></ProductFilter>
         </div>
     </nav>
     <div class="container">
