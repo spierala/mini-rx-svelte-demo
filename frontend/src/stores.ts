@@ -5,7 +5,7 @@ import {
     ReduxDevtoolsExtension,
     UndoExtension,
 } from 'mini-rx-store';
-import { UserStore } from './modules/user/state/user-state.service';
+import { UserStore } from './modules/user/state/user-store';
 
 // Store
 export const store = configureStore({

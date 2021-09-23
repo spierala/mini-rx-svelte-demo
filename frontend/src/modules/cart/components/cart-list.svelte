@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { productState } from '../../product/state/product-facade.service';
+    import { productState } from '../../product/state/product-store.facade';
     import { CartItem } from '../../product/models/cart-item';
     import { Observable } from 'rxjs';
 

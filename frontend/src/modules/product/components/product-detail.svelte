@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { productState } from '../state/product-facade.service';
+    import { productState } from '../state/product-store.facade';
     import { Product } from '../models/product';
-    import type { Permissions } from '../../user/state/user-state.service';
+    import type { Permissions } from '../../user/state/user-store';
 
     export let product: Product;
     export let permissions: Permissions;

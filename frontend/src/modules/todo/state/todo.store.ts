@@ -70,7 +70,7 @@ const getSelectedTodo = createSelector(
 
 const apiService: TodosApiService = new TodosApiService();
 
-class TodosStore extends FeatureStore<TodoState> {
+class TodoStore extends FeatureStore<TodoState> {
     // STATE OBSERVABLES
     todosDone$: Observable<Todo[]> = this.select(getTodosDone);
     todosNotDone$: Observable<Todo[]> = this.select(getTodosNotDone);
@@ -100,18 +100,6 @@ class TodosStore extends FeatureStore<TodoState> {
             'clearSelectedTodo'
         );
     }
-
-    // updateFilter(filter: Filter) {
-    //     this.setState(
-    //         {
-    //             filter: {
-    //                 ...this.state.filter,
-    //                 ...filter,
-    //             },
-    //         },
-    //         'updateFilter'
-    //     );
-    // }
 
     toggleIsPrivate() {
         this.setState((state) => ({
@@ -228,4 +216,4 @@ class TodosStore extends FeatureStore<TodoState> {
     }
 }
 
-export const todosStore = new TodosStore();
+export const todoStore = new TodoStore();

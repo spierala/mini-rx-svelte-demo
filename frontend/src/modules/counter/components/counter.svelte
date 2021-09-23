@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Observable } from 'rxjs';
-    import { CounterStateService } from './state/counter-state.service';
+    import { CounterStore } from './state/counter-store';
 
-    let counterState: CounterStateService = new CounterStateService();
+    let counterState: CounterStore = new CounterStore();
     let counter$: Observable<number> = counterState.count$;
 
     function increment() {

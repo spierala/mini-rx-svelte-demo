@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { todosStore } from '../state/todos.store';
+    import { todoStore } from '../state/todo.store';
     import { Filter } from '../models/filter';
 
     export let filter: Filter;
@@ -11,7 +11,7 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="Search todos"
-            on:input={(e) => todosStore.search(e.target.value)}
+            on:input={(e) => todoStore.search(e.target.value)}
         />
     </div>
     <div class="d-flex align-items-center">
@@ -21,7 +21,7 @@
                 type="checkbox"
                 id="filterIsPrivate"
                 bind:checked={filter.category.isPrivate}
-                on:change={() => todosStore.toggleIsPrivate()}
+                on:change={() => todoStore.toggleIsPrivate()}
             />
             <label class="form-check-label font-weight-bold text-primary" for="filterIsPrivate">
                 Private
@@ -33,7 +33,7 @@
                 type="checkbox"
                 id="filterIsBusiness"
                 bind:checked={filter.category.isBusiness}
-                on:change={() => todosStore.toggleIsBusiness()}
+                on:change={() => todoStore.toggleIsBusiness()}
             />
             <label class="form-check-label font-weight-bold text-info" for="filterIsBusiness">
                 Business

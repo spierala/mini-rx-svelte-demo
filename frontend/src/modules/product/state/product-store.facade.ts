@@ -19,8 +19,8 @@ import { CartItem } from '../models/cart-item';
 import { store } from '../../../stores';
 import { ProductEffects } from './product.effects';
 import { productReducer } from './product.reducer';
-import { featureKeyUser } from '../../user/state/user-state.service';
-import type { UserState } from '../../user/state/user-state.service';
+import { featureKeyUser } from '../../user/state/user-store';
+import type { UserState } from '../../user/state/user-store';
 
 const productFeatureKey = 'products';
 
@@ -96,7 +96,7 @@ const getDetailTitle = createSelector(getPermissions, getCurrentProduct, (permis
     return 'View Product';
 });
 
-export class ProductFacadeService {
+export class ProductStoreFacade {
     displayCode$: Observable<boolean> = store.select(getShowProductCode);
     selectedProduct$: Observable<Product> = store.select(getCurrentProduct);
     products$: Observable<Product[]> = store.select(getFilteredProducts);
@@ -160,4 +160,4 @@ export class ProductFacadeService {
     }
 }
 
-export const productState = new ProductFacadeService();
+export const productState = new ProductStoreFacade();

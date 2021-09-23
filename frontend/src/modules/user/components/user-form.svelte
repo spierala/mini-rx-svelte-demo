@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { User, Permissions } from '../state/user-state.service';
+    import type { User, Permissions } from '../state/user-store';
     import { userStore } from '../../../stores';
 
     export let user: User;

@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { Product } from '../models/product';
-    import { productState } from '../state/product-facade.service';
+    import { productState } from '../state/product-store.facade';
 
     export let products: Product[];
     export let selectedProduct: Product;
@@ -18,7 +18,7 @@
     export let showCartBtn: boolean;
 
     function addToCart(product: Product) {
-        productState.addProductToCart(product)
+        productState.addProductToCart(product);
     }
 
     function displayCodeChange(v: boolean) {
@@ -34,7 +34,12 @@
     <div class="card-header d-flex">
         <span class="flex-grow-1">Products</span>
         <label>
-            <input class="form-check-input" type="checkbox" checked={displayCode} on:change={(e) => displayCodeChange(e.target.checked)}/>
+            <input
+                class="form-check-input"
+                type="checkbox"
+                checked={displayCode}
+                on:change={(e) => displayCodeChange(e.target.checked)}
+            />
             Display Product Code
         </label>
     </div>

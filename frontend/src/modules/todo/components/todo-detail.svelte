@@ -1,23 +1,23 @@
 <script lang="ts">
     import { Todo } from '../models/todo';
-    import { todosStore } from '../state/todos.store';
+    import { todoStore } from '../state/todo.store';
 
     export let todo: Todo;
 
     function onSubmit() {
         if (todo.id) {
-            todosStore.update(todo);
+            todoStore.update(todo);
         } else {
-            todosStore.create(todo);
+            todoStore.create(todo);
         }
     }
 
     function deleteTodo() {
-        todosStore.delete(todo);
+        todoStore.delete(todo);
     }
 
     function close() {
-        todosStore.clearSelectedTodo();
+        todoStore.clearSelectedTodo();
     }
 </script>
 

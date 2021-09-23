@@ -5,7 +5,7 @@
     import { wrap } from 'svelte-spa-router/wrap';
     import UserShell from './modules/user/components/user-shell.svelte';
     import { Observable } from 'rxjs';
-    import { productState } from './modules/product/state/product-facade.service';
+    import { productState } from './modules/product/state/product-store.facade';
 
     const cartItemsAmount$: Observable<number> = productState.cartItemsAmount$;
     const userFullName$ = userStore.userFullName$;
