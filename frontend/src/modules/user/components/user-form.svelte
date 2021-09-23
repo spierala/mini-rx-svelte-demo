@@ -44,7 +44,7 @@
                         class="custom-control-input"
                         id="canUpdateProducts"
                         name="canUpdateProducts"
-                        value={permissions.canUpdateProducts}
+                        checked={permissions.canUpdateProducts}
                         on:input={(e) => userStore.toggleCanUpdateProducts()}
                     />
                     <label class="custom-control-label" for="canUpdateProducts">

@@ -19,6 +19,8 @@ import { CartItem } from '../models/cart-item';
 import { store } from '../../../stores';
 import { ProductEffects } from './product.effects';
 import { productReducer } from './product.reducer';
+import { featureKeyUser } from '../../user/state/user-state.service';
+import type { UserState } from '../../user/state/user-state.service';
 
 const productFeatureKey = 'products';
 
@@ -85,6 +87,14 @@ const getCartTotalPrice = createSelector(getCartItemsWithExtraData, (cartItemsWi
         return previousValue + currentValue.total;
     }, 0)
 );
+const getUserFeatureState = createFeatureSelector<UserState>(featureKeyUser);
+const getPermissions = createSelector(getUserFeatureState, (state) => state.permissions);
+const getDetailTitle = createSelector(getPermissions, getCurrentProduct, (permissions, product) => {
+    if (permissions.canUpdateProducts) {
+        return product && product.id ? 'Edit Product' : 'Create Product';
+    }
+    return 'View Product';
+});
 
 export class ProductFacadeService {
     displayCode$: Observable<boolean> = store.select(getShowProductCode);
@@ -96,6 +106,7 @@ export class ProductFacadeService {
     cartItemsAmount$: Observable<number> = store.select(getCartItemsAmount);
     cartTotalPrice$: Observable<number> = store.select(getCartTotalPrice);
     hasCartItems$: Observable<boolean> = store.select(getHasCartItems);
+    detailTitle$: Observable<string> = store.select(getDetailTitle);
 
     constructor() {
         const effects = new ProductEffects();

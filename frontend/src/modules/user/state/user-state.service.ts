@@ -1,7 +1,9 @@
 import { createFeatureSelector, createSelector, FeatureStore } from 'mini-rx-store';
 import { Observable } from 'rxjs';
 
-interface UserState {
+export const featureKeyUser = 'user';
+
+export interface UserState {
     user: User;
     permissions: Permissions;
 }
@@ -21,7 +23,7 @@ const initialState: UserState = {
         lastName: 'Doe',
     },
     permissions: {
-        canUpdateProducts: false,
+        canUpdateProducts: true,
     },
 };
 
@@ -41,7 +43,7 @@ export class UserStore extends FeatureStore<UserState> {
     user$: Observable<User> = this.select(getUser);
 
     constructor() {
-        super('user', initialState);
+        super(featureKeyUser, initialState);
     }
 
     toggleCanUpdateProducts() {
