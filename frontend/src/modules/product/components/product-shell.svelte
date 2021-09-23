@@ -17,6 +17,7 @@
 
     const permissions$: Observable<Permissions> = userStore.permissions$;
     const search$: Observable<string> = productState.search$;
+    const displayCode$: Observable<boolean> = productState.displayCode$;
 </script>
 
 <div class="d-flex flex-column h-100">
@@ -34,7 +35,10 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <ProductList products={$products$} showCartBtn={!$permissions$.canUpdateProducts} />
+                <ProductList products={$products$}
+                             showCartBtn={!$permissions$.canUpdateProducts}
+                             displayCode="{$displayCode$}"
+                             selectedProduct="{$selectedProduct$}"/>
             </div>
             {#if $selectedProduct$}
                 <div class="col">
