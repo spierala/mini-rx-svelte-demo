@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { productState } from '../state/product-store.facade';
+    import { productStoreFacade } from '../state/product-store.facade';
     import { Product } from '../models/product';
     import type { Permissions } from '../../user/state/user-store';
 
@@ -9,18 +9,18 @@
 
     function onSubmit() {
         if (product.id) {
-            productState.update(product);
+            productStoreFacade.update(product);
         } else {
-            productState.create(product);
+            productStoreFacade.create(product);
         }
     }
 
     function onClose() {
-        productState.clearProduct();
+        productStoreFacade.clearProduct();
     }
 
     function onDelete() {
-        productState.delete(product);
+        productStoreFacade.delete(product);
     }
 </script>
 

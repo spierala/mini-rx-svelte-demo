@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { Product } from '../models/product';
-    import { productState } from '../state/product-store.facade';
+    import { productStoreFacade } from '../state/product-store.facade';
 
     export let products: Product[];
     export let selectedProduct: Product;
@@ -18,15 +18,15 @@
     export let showCartBtn: boolean;
 
     function addToCart(product: Product) {
-        productState.addProductToCart(product);
+        productStoreFacade.addProductToCart(product);
     }
 
     function displayCodeChange(v: boolean) {
-        productState.toggleProductCode(v);
+        productStoreFacade.toggleProductCode(v);
     }
 
     function productSelect(product: Product) {
-        productState.selectProduct(product);
+        productStoreFacade.selectProduct(product);
     }
 </script>
 

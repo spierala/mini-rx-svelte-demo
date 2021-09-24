@@ -160,4 +160,4 @@ export class ProductStoreFacade {
     }
 }
 
-export const productState = new ProductStoreFacade();
+export const productStoreFacade = new ProductStoreFacade();

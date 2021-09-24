@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { productState } from '../../product/state/product-store.facade';
+    import { productStoreFacade } from '../../product/state/product-store.facade';
     import { CartItem } from '../../product/models/cart-item';
     import { Observable } from 'rxjs';
 
-    const cartItems$: Observable<CartItem[]> = productState.cartItems$;
-    const hasCartItems$: Observable<boolean> = productState.hasCartItems$;
-    const cartTotalPrice$: Observable<number> = productState.cartTotalPrice$;
+    const cartItems$: Observable<CartItem[]> = productStoreFacade.cartItems$;
+    const hasCartItems$: Observable<boolean> = productStoreFacade.hasCartItems$;
+    const cartTotalPrice$: Observable<number> = productStoreFacade.cartTotalPrice$;
 </script>
 
 <div class="d-flex flex-column h-100">
@@ -35,7 +35,7 @@
 
                                 <span
                                     class="btn bi bi-trash-fill text-danger"
-                                    on:click={productState.removeProductFromCart(item)}
+                                    on:click={productStoreFacade.removeProductFromCart(item)}
                                 />
                             </li>
                         {/each}

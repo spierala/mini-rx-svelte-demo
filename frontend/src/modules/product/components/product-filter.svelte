@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { productState } from '../state/product-store.facade';
+    import { productStoreFacade } from '../state/product-store.facade';
 
     export let search: string;
 </script>
@@ -11,7 +11,7 @@
             class="form-control form-control-sm"
             placeholder="Search todos"
             value={search}
-            on:input={(e) => productState.updateSearch(e.target.value)}
+            on:input={(e) => productStoreFacade.updateSearch(e.target.value)}
         />
     </div>
 </form>
