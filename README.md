@@ -1,7 +1,7 @@
 # MiniRx Store Demo (Svelte)
 ## See the MiniRx Redux Api and the Feature Stores in Action
 
-![MiniRx Demo Svelte](.github/images/screenshot-mini-rx-svelte-demo.png)
+![MiniRx Demo Svelte](.github/images/minirx-svelte-demo.gif)
 
 
 MiniRx is a Redux Store based on RxJS.
