@@ -1,6 +1,9 @@
 # MiniRx Store Demo (Svelte)
 ## See the MiniRx Redux Api and the Feature Stores in Action
 
+![MiniRx Demo Svelte](.github/images/screenshot-mini-rx-svelte-demo.png)
+
+
 MiniRx is a Redux Store based on RxJS.
 
 RxJS plays nicely with Svelte: RxJS Observables expose a subscribe method (just like svelte stores).
@@ -20,6 +23,12 @@ MiniRx Store has some advantages compared to the native Svelte writable/readable
 
 Give it a ⭐  on [GitHub](https://github.com/spierala/mini-rx-store)
 
+### Run the demo locally on your machine
+
+- Install dependencies: `npm run install-dependencies`: It will install all dependencies for the Svelte frontend and the Strapi backend
+- Run the Svelte frontend: `npm run start:front`
+- Run the Strapi backend (in another terminal window): `npm run start:back`
 ### Todos
+
 - Disable Store Extensions in PROD
 - Host the demo on a server
