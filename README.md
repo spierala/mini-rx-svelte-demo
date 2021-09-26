@@ -14,7 +14,6 @@ MiniRx Store has some advantages compared to the native Svelte writable/readable
 - Immutability of state can be enforced with the **Immutable Extension**
   - With immutable state we can be sure that state changes are done **explicitly** (using `setState` or by dispatching an Action)
   - We can enable `compilerOptions.immutable` in the rollup config to improve performance
-- **Memoized selectors** reduce the amount of calculations for derived state
 - State is exposed as **RxJS Observable**. We can take advantage of RxJS operators to transform and combine state
 - MiniRx has a **RxJS-based side effects** model: Let the action stream trigger side effects like API calls and handle race conditions with RxJS flattening operators
 - Undo: You can easily undo state changes with the **Undo Extension**
