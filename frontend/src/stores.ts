@@ -7,11 +7,13 @@ import {
 import { UserStore } from './modules/user/state/user-store';
 import { isProd } from './environment';
 
+const extensions = isProd
+    ? [new ReduxDevtoolsExtension({})] // Keep DevTools for Demo purposes
+    : [new LoggerExtension(), new ImmutableStateExtension(), new ReduxDevtoolsExtension({})];
+
 // Store
 export const store = configureStore({
-    extensions: isProd
-        ? [new LoggerExtension(), new ImmutableStateExtension(), new ReduxDevtoolsExtension({})]
-        : [new ReduxDevtoolsExtension({})], // Keep DevTools for Demo purposes
+    extensions,
 });
 
 // Feature Stores

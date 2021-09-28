@@ -3,6 +3,3 @@ const environment = myapp.env;
 
 export const apiBasePath = environment.API_URL;
 export const isProd = environment.isProd;
-
-console.log('apiBasePath', apiBasePath);
-console.log('isProd', isProd);
