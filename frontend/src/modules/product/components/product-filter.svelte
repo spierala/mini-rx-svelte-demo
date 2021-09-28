@@ -9,7 +9,7 @@
         <input
             type="text"
             class="form-control form-control-sm"
-            placeholder="Search todos"
+            placeholder="Search products"
             value={search}
             on:input={(e) => productStoreFacade.updateSearch(e.target.value)}
         />
