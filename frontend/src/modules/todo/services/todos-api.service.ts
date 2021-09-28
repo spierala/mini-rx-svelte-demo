@@ -2,8 +2,9 @@ import { Todo } from '../models/todo';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { apiBasePath } from '../../../environment';
 
-const apiUrl = 'http://localhost:1337/todos/';
+const apiUrl = apiBasePath + '/todos/';
 
 export class TodosApiService {
     constructor() {}

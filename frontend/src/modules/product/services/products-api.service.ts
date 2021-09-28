@@ -2,8 +2,9 @@ import { Product } from '../models/product';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { apiBasePath } from '../../../environment';
 
-const apiUrl = 'http://localhost:1337/products/';
+const apiUrl = apiBasePath + '/products/';
 
 class ProductsApiService {
     constructor() {}

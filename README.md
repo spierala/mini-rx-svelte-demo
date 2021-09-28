@@ -27,7 +27,3 @@ Give it a ⭐  on [GitHub](https://github.com/spierala/mini-rx-store)
 - Install dependencies: `npm run install-dependencies`: It will install all dependencies for the Svelte frontend and the Strapi backend
 - Run the Svelte frontend: `npm run start:front`
 - Run the Strapi backend (in another terminal window): `npm run start:back`
-### Todos
-
-- Disable Store Extensions in PROD
-- Host the demo on a server
