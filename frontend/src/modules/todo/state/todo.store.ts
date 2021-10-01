@@ -1,7 +1,7 @@
 import { Todo } from '../models/todo';
 import { Filter } from '../models/filter';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, debounce, debounceTime, mergeMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, mergeMap, tap } from 'rxjs/operators';
 import { Action, createFeatureSelector, createSelector, FeatureStore } from 'mini-rx-store';
 import { TodosApiService } from '../services/todos-api.service';
 
@@ -15,15 +15,7 @@ interface TodoState {
 
 // INITIAL STATE
 const initialState: TodoState = {
-    todos: [
-        {
-            id: 1,
-            isDone: true,
-            isPrivate: false,
-            isBusiness: false,
-            title: 'todo 1',
-        },
-    ],
+    todos: [],
     selectedTodoId: undefined,
     filter: {
         search: '',
