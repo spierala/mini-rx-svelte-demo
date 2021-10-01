@@ -36,12 +36,7 @@ const initialState: ProductState = {
     products: [],
     error: '',
     search: '',
-    cart: [
-        {
-            productId: 7,
-            amount: 1,
-        },
-    ],
+    cart: [],
 };
 
 export const productReducer = reducer<ProductState>(
