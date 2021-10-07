@@ -95,6 +95,19 @@
                     </a>
                 </li>
             </ul>
+            <a
+                href="https://github.com/spierala/mini-rx-svelte-demo"
+                title="Go to the Angular MiniRx demo on Github"
+                target="_blank"
+            >
+                <img
+                    src="assets/github-logo.svg"
+                    height="32"
+                    width="32"
+                    alt="Mini Rx Store Logo"
+                    class="ml-3"
+                />
+            </a>
         </nav>
         <div class="flex-grow-1">
             <Router {routes} />
