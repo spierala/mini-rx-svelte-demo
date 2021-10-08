@@ -23,6 +23,10 @@ MiniRx Store has some advantages compared to the native Svelte writable/readable
 - State is exposed as **RxJS Observable**. We can take advantage of RxJS operators to transform and combine state
 - MiniRx has a **RxJS-based side effects** model: Let the action stream trigger side effects like API calls and handle race conditions with RxJS flattening operators
 - Undo: You can easily undo state changes with the **Undo Extension**
+- MiniRx is framework agnostic. It works for example nicely with Angular (see Angular demo here: https://angular-demo.mini-rx.io)
+
+### Try the demo online:
+[Svelte demo](https://svelte-demo.mini-rx.io)
 
 ### Run the demo locally on your machine
 
