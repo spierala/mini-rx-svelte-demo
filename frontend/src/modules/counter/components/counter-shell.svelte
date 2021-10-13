@@ -3,9 +3,10 @@
 </script>
 
 <div class="d-flex flex-column flex-grow-1 h-100">
-    <div class="m-3 alert alert-info" role="alert">
-        The counter components use "Local Component State": The counter states are removed when the
-        components are destroyed
+    <div class="m-3 alert alert-info d-flex align-items-center" role="alert">
+        <i class="info-icon bi bi-info-circle-fill" />
+        The counter components use "Local Component State": The counter states are removed from the global
+        state when the components are destroyed
     </div>
 
     <div class="d-flex justify-content-between p-5">

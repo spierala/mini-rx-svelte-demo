@@ -1,3 +1,5 @@
+declare var __myapp;
+
 const myapp = __myapp; // Retrieved from .env via rollup replace plugin
 const environment = myapp.env;
 

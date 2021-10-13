@@ -80,7 +80,9 @@
             </div>
             <button class="btn btn-primary mr-2" type="submit">Save</button>
             {#if todo.id}
-                <button class="btn btn-primary btn-danger" on:click={deleteTodo}>Delete</button>
+                <button class="btn btn-primary btn-danger" on:click={deleteTodo} type="button">
+                    Delete
+                </button>
             {/if}
         </form>
     </div>
