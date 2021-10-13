@@ -94,39 +94,48 @@ class TodoStore extends FeatureStore<TodoState> {
     }
 
     toggleIsPrivate() {
-        this.setState((state) => ({
-            filter: {
-                ...state.filter,
-                category: {
-                    ...state.filter.category,
-                    isPrivate: !state.filter.category.isPrivate,
+        this.setState(
+            (state) => ({
+                filter: {
+                    ...state.filter,
+                    category: {
+                        ...state.filter.category,
+                        isPrivate: !state.filter.category.isPrivate,
+                    },
                 },
-            },
-        }));
+            }),
+            'toggleIsPrivate'
+        );
     }
 
     toggleIsBusiness() {
-        this.setState((state) => ({
-            filter: {
-                ...state.filter,
-                category: {
-                    ...state.filter.category,
-                    isBusiness: !state.filter.category.isBusiness,
+        this.setState(
+            (state) => ({
+                filter: {
+                    ...state.filter,
+                    category: {
+                        ...state.filter.category,
+                        isBusiness: !state.filter.category.isBusiness,
+                    },
                 },
-            },
-        }));
+            }),
+            'toggleIsBusiness'
+        );
     }
 
     search = this.effect<string>((payload$) =>
         payload$.pipe(
             debounceTime(350),
             tap((search) =>
-                this.setState((state) => ({
-                    filter: {
-                        ...state.filter,
-                        search: search,
-                    },
-                }))
+                this.setState(
+                    (state) => ({
+                        filter: {
+                            ...state.filter,
+                            search: search,
+                        },
+                    }),
+                    'updateSearch'
+                )
             )
         )
     );
@@ -138,7 +147,9 @@ class TodoStore extends FeatureStore<TodoState> {
             mergeMap(() =>
                 apiService.getTodos().pipe(
                     tap((todos) => this.setState({ todos }, 'loadSuccess')),
-                    catchError(() => EMPTY)
+                    catchError(() => {
+                        return EMPTY;
+                    })
                 )
             )
         );
@@ -159,14 +170,7 @@ class TodoStore extends FeatureStore<TodoState> {
                 tap((newTodo) => {
                     this.setState(
                         (state) => ({
-                            todos: state.todos.map((item) =>
-                                item === todo
-                                    ? {
-                                          ...item,
-                                          id: newTodo.id,
-                                      }
-                                    : item
-                            ),
+                            todos: state.todos.map((item) => (item === todo ? newTodo : item)),
                             newTodo: undefined,
                         }),
                         'createSuccess'
@@ -182,30 +186,63 @@ class TodoStore extends FeatureStore<TodoState> {
 
     // ...with subscribe
     update(todo: Todo) {
-        apiService.updateTodo(todo).subscribe((updatedTodo) => {
-            this.setState(
-                {
-                    todos: this.state.todos.map((item) =>
-                        item.id === todo.id ? updatedTodo : item
-                    ),
-                },
-                'updateSuccess'
-            );
-        });
+        const optimisticUpdate: Action = this.setState(
+            (state) => ({
+                todos: updateTodoInList(state.todos, todo),
+            }),
+            'updateOptimistic'
+        );
+
+        apiService
+            .updateTodo(todo)
+            .pipe(
+                tap((updatedTodo) => {
+                    this.setState(
+                        (state) => ({
+                            todos: updateTodoInList(state.todos, updatedTodo),
+                        }),
+                        'updateSuccess'
+                    );
+                }),
+                catchError(() => {
+                    this.undo(optimisticUpdate);
+                    return EMPTY;
+                })
+            )
+            .subscribe();
     }
 
     // ...with subscribe
     delete(todo: Todo) {
-        apiService.deleteTodo(todo).subscribe(() => {
-            this.setState(
-                {
-                    selectedTodoId: undefined,
-                    todos: this.state.todos.filter((item) => item.id !== todo.id),
-                },
-                'deleteSuccess'
-            );
-        });
+        const optimisticUpdate: Action = this.setState(
+            (state) => ({
+                todos: this.state.todos.filter((item) => item.id !== todo.id),
+            }),
+            'deleteOptimistic'
+        );
+
+        apiService
+            .deleteTodo(todo)
+            .pipe(
+                tap(() => {
+                    this.setState(
+                        {
+                            selectedTodoId: undefined,
+                        },
+                        'deleteSuccess'
+                    );
+                }),
+                catchError(() => {
+                    this.undo(optimisticUpdate);
+                    return EMPTY;
+                })
+            )
+            .subscribe();
     }
+}
+
+function updateTodoInList(todos: Todo[], updatedTodo: Todo): Todo[] {
+    return todos.map((item) => (item.id === updatedTodo.id ? updatedTodo : item));
 }
 
 export const todoStore = new TodoStore();

@@ -6,7 +6,7 @@
     "install-dependencies": "npm run install-dependencies-front && npm run install-dependencies-back",
     "install-dependencies-front": "cd frontend && npm i",
     "install-dependencies-back": "cd backend && npm i",
-    "start:front": "cd frontend && npm start",
+    "start:front": "cd frontend && npm run start",
     "start:back": "cd backend && npm run start"
   },
   "author": "Florian Spier",

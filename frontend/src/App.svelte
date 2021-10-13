@@ -6,6 +6,7 @@
     import UserShell from './modules/user/components/user-shell.svelte';
     import { Observable } from 'rxjs';
     import { productStoreFacade } from './modules/product/state/product-store.facade';
+    import { SvelteToast } from '@zerodevx/svelte-toast';
 
     const cartItemsAmount$: Observable<number> = productStoreFacade.cartItemsAmount$;
     const userFullName$ = userStore.userFullName$;
@@ -113,4 +114,5 @@
             <Router {routes} />
         </div>
     </div>
+    <SvelteToast />
 </body>
