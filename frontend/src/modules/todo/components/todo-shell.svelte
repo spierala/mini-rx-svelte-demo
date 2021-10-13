@@ -35,8 +35,8 @@
 
     <div class="m-3 alert alert-info d-flex align-items-center" role="alert">
         <i class="info-icon bi bi-info-circle-fill" />
-        Todos are updated optimistically. Press the ALT key while an API response is received to simulate
-        a failed API call: The optimistic update will be rolled back.
+        The todos are updated optimistically. Press the ALT key while saving or deleting a todo to simulate
+        an API error: The optimistic update will be rolled back.
     </div>
 
     <div class="container">
