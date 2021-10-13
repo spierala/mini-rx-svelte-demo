@@ -141,7 +141,7 @@ class TodoStore extends FeatureStore<TodoState> {
     );
 
     // API CALLS...
-    // ...with effect
+    // ...with MiniRx effect
     load = this.effect<void>((payload$) => {
         return payload$.pipe(
             mergeMap(() =>
@@ -155,7 +155,7 @@ class TodoStore extends FeatureStore<TodoState> {
         );
     });
 
-    // ... with effect and optimistic update / undo
+    // ... with MiniRx effect
     create = this.effect<Todo>(
         // FYI: we can skip the $payload pipe when using just one RxJS operator
         mergeMap((todo) => {
