@@ -26,7 +26,7 @@
 
 <div class="d-flex flex-column h-100">
     <nav class="navbar navbar-light bg-light mb-1">
-        <a class="navbar-brand">Todos</a>
+        <span class="navbar-brand">Todos</span>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <button class="btn btn-primary btn-sm" on:click={addTodo}>New</button>
             <TodoFilter filter={$filter$} />

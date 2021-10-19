@@ -31,7 +31,7 @@
 <body>
     <div class="w-100 h-100 d-flex flex-column">
         <nav class="navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand">
+            <a class="navbar-brand" href="/">
                 <img
                     src="assets/mini-rx-logo.svg"
                     width="48"

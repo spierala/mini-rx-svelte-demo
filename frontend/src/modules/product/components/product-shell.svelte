@@ -22,7 +22,7 @@
 
 <div class="d-flex flex-column h-100">
     <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand">Products</a>
+        <span class="navbar-brand">Products</span>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <div>
                 {#if $permissions$.canUpdateProducts}

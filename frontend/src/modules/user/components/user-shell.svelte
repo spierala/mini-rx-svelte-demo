@@ -10,7 +10,7 @@
 
 <div class="d-flex flex-column h-100">
     <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand">User Profile</a>
+        <span class="navbar-brand">User Profile</span>
     </nav>
     <UserForm user={$user$} permissions={$permissions$} />
 </div>

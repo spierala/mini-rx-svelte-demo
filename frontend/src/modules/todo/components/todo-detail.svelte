@@ -43,16 +43,16 @@
                 />
             </div>
             <div class="form-group">
-                <label>Status</label>
+                <label for="isDone">Status</label>
                 <div class="custom-control custom-switch">
                     <input
                         type="checkbox"
                         class="custom-control-input"
-                        id="customSwitch1"
+                        id="isDone"
                         bind:checked={todo.isDone}
                         name="isDone"
                     />
-                    <label class="custom-control-label" for="customSwitch1">Done</label>
+                    <label class="custom-control-label" for="isDone">Done</label>
                 </div>
             </div>
             <div class="form-group">

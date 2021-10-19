@@ -69,6 +69,7 @@ export default {
                     ...config().parsed, // attached the .env config
                 },
             }),
+            preventAssignment: true,
         }),
         svelte({
             preprocess: sveltePreprocess({ sourceMap: !production }),
