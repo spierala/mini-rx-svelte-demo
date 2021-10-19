@@ -41,6 +41,25 @@ export default {
         name: 'app',
         dir: 'public/build',
     },
+    // Fix for (!) this has been rewritten to undefined
+    // https://medium.com/i18n-and-l10n-resources-for-developers/how-to-localize-a-svelte-app-with-svelte-i18n-9e86cc9eb727
+    moduleContext: (id) => {
+        // In order to match native module behaviour, Rollup sets `this`
+        // as `undefined` at the top level of modules. Rollup also outputs
+        // a warning if a module tries to access `this` at the top level.
+        // The following modules use `this` at the top level and expect it
+        // to be the global `window` object, so we tell Rollup to set
+        // `this = window` for these modules.
+        const thisAsWindowForModules = [
+            'node_modules/ts-action/esm5/action.js',
+            'node_modules/ts-action/esm5/guard.js',
+            'node_modules/ts-action/esm5/reducer.js',
+        ];
+
+        if (thisAsWindowForModules.some((id_) => id.trimRight().endsWith(id_))) {
+            return 'window';
+        }
+    },
     plugins: [
         replace({
             // stringify the object
