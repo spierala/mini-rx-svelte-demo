@@ -21,7 +21,7 @@
 </script>
 
 <div class="d-flex flex-column h-100">
-    <nav class="navbar navbar-light bg-light mb-4">
+    <nav class="navbar navbar-light bg-light mb-1">
         <span class="navbar-brand">Products</span>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <div>
@@ -34,6 +34,16 @@
             <ProductFilter search={$search$} />
         </div>
     </nav>
+
+    <div class="m-3 alert alert-info d-flex align-items-center" role="alert">
+        <i class="info-icon bi bi-info-circle-fill"></i>
+        You can edit the products if you enable "CanUpdateProducts" in the "John Doe" user settings of this demo.
+        <br/>
+        Press the ALT key while saving or deleting a product to simulate an API error.
+        <br/>
+        Saving an existing product uses optimistic update (and undo in case of API error).
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col">
