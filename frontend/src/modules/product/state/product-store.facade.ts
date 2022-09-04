@@ -76,12 +76,16 @@ const getCartTotalPrice = createSelector(getCartItemsWithExtraData, (cartItemsWi
 
 const getUserFeatureState = createFeatureSelector<UserState>(featureKeyUser);
 const getPermissions = createSelector(getUserFeatureState, (state) => state.permissions);
-const getDetailTitle = createSelector(getPermissions, getSelectedProduct, (permissions, product) => {
-    if (permissions.canUpdateProducts) {
-        return product && product.id ? 'Edit Product' : 'Create Product';
+const getDetailTitle = createSelector(
+    getPermissions,
+    getSelectedProduct,
+    (permissions, product) => {
+        if (permissions.canUpdateProducts) {
+            return product && product.id ? 'Edit Product' : 'Create Product';
+        }
+        return 'View Product';
     }
-    return 'View Product';
-});
+);
 
 export class ProductStoreFacade {
     // STATE OBSERVABLES

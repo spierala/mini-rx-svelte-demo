@@ -60,7 +60,7 @@ export const productReducer = reducer<ProductState>(
         );
         return {
             ...state,
-            products: updatedProducts
+            products: updatedProducts,
         };
     }),
     on(updateProductSuccess, (state, { payload }) => {

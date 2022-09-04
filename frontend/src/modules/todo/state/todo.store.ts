@@ -2,7 +2,13 @@ import { Todo } from '../models/todo';
 import { Filter } from '../models/filter';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { Action, createFeatureSelector, createSelector, FeatureStore, tapResponse, } from 'mini-rx-store';
+import {
+    Action,
+    createFeatureSelector,
+    createSelector,
+    FeatureStore,
+    tapResponse,
+} from 'mini-rx-store';
 import { TodoApiService } from '../services/todo-api.service';
 import { v4 as uuid } from 'uuid';
 
