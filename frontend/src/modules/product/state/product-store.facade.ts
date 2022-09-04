@@ -1,26 +1,26 @@
 import * as fromProducts from './product.reducer';
+import { productReducer } from './product.reducer';
 import { createFeatureSelector, createSelector } from 'mini-rx-store';
 import {
+    addProductToCart,
     clearCurrentProduct,
     createProduct,
     deleteProduct,
     initializeNewProduct,
     load,
+    removeProductFromCart,
     selectProduct,
     toggleProductCode,
     updateProduct,
     updateSearch,
-    addProductToCart,
-    removeProductFromCart,
 } from './product.actions';
 import { Product } from '../models/product';
 import { Observable } from 'rxjs';
 import { CartItem } from '../models/cart-item';
 import { store } from '../../../stores';
 import { ProductEffects } from './product.effects';
-import { productReducer } from './product.reducer';
-import { featureKeyUser } from '../../user/state/user-store';
 import type { UserState } from '../../user/state/user-store';
+import { featureKeyUser } from '../../user/state/user-store';
 
 const productFeatureKey = 'products';
 

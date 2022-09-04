@@ -1,7 +1,6 @@
-import { from, of } from 'rxjs';
-import { catchError, map, mergeMap, startWith } from 'rxjs/operators';
+import { mergeMap, startWith } from 'rxjs/operators';
 
-import { Action, undo, actions$, mapResponse } from 'mini-rx-store';
+import { Action, actions$, mapResponse, undo } from 'mini-rx-store';
 import { ofType, toPayload } from 'ts-action-operators';
 import {
     createProduct,

@@ -2,7 +2,7 @@
     import { userStore } from '../../../stores';
     import UserForm from '../components/user-form.svelte';
     import { Observable } from 'rxjs';
-    import type { User, Permissions } from '../state/user-store';
+    import type { Permissions, User } from '../state/user-store';
 
     const user$: Observable<User> = userStore.user$;
     const permissions$: Observable<Permissions> = userStore.permissions$;
