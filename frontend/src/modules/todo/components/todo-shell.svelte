@@ -3,16 +3,16 @@
     import TodoFilter from './todo-filter.svelte';
     import TodoList from './todo-list.svelte';
     import { todoStore } from '../state/todo.store';
-    import clonedeep from 'lodash.clonedeep';
+    import { cloneDeep } from 'lodash-es';
     import { map } from 'rxjs/operators';
 
     const todosDone$ = todoStore.todosDone$;
     const todosNotDone$ = todoStore.todosNotDone$;
     const selectedTodo$ = todoStore.selectedTodo$.pipe(
-        map(clonedeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent mutating the state
     );
     const filter$ = todoStore.filter$.pipe(
-        map(clonedeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent mutating the state
     );
 
     function selectTodo(event) {

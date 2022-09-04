@@ -1,7 +1,7 @@
 <script lang="ts">
     import ProductDetail from './product-detail.svelte';
     import { productStoreFacade } from '../state/product-store.facade';
-    import clonedeep from 'lodash.clonedeep';
+    import { cloneDeep } from 'lodash-es';
     import { map } from 'rxjs/operators';
     import { Observable } from 'rxjs';
     import { Product } from '../models/product';
@@ -12,7 +12,7 @@
 
     const products$: Observable<Product[]> = productStoreFacade.products$;
     const selectedProduct$: Observable<Product> = productStoreFacade.selectedProduct$.pipe(
-        map(clonedeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent mutating the state
     );
     const permissions$: Observable<Permissions> = userStore.permissions$;
     const search$: Observable<string> = productStoreFacade.search$;
