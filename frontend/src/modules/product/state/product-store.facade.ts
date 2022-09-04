@@ -4,9 +4,9 @@ import {
     clearCurrentProduct,
     createProduct,
     deleteProduct,
-    initializeCurrentProduct,
+    initializeNewProduct,
     load,
-    setCurrentProduct,
+    selectProduct,
     toggleProductCode,
     updateProduct,
     updateSearch,
@@ -24,33 +24,11 @@ import type { UserState } from '../../user/state/user-store';
 
 const productFeatureKey = 'products';
 
-// Selector functions
-const getProductFeatureState = createFeatureSelector<fromProducts.ProductState>(productFeatureKey);
+// MEMOIZED SELECTORS
+const getProductFeatureState = createFeatureSelector<fromProducts.ProductState>('products');
 const getShowProductCode = createSelector(getProductFeatureState, (state) => state.showProductCode);
-const getCurrentProductId = createSelector(
-    getProductFeatureState,
-    (state) => state.currentProductId
-);
-const getCurrentProduct = createSelector(
-    getProductFeatureState,
-    getCurrentProductId,
-    (state, currentProductId) => {
-        if (currentProductId === 0) {
-            return {
-                id: 0,
-                productName: '',
-                productCode: 'New',
-                description: '',
-                starRating: 0,
-                price: 0,
-            };
-        } else {
-            return currentProductId ? state.products.find((p) => p.id === currentProductId) : null;
-        }
-    }
-);
+const getSelectedProduct = createSelector(getProductFeatureState, (state) => state.selectedProduct);
 const getProducts = createSelector(getProductFeatureState, (state) => state.products);
-const getError = createSelector(getProductFeatureState, (state) => state.error);
 const getSearch = createSelector(getProductFeatureState, (state) => state.search);
 const getFilteredProducts = createSelector(getProducts, getSearch, (products, search) => {
     return products.filter(
@@ -62,13 +40,18 @@ const getCartItemsWithExtraData = createSelector(
     getProducts,
     getCartItems,
     (products, cartItems) => {
-        return cartItems.reduce((accumulated, cartItem) => {
-            const foundProduct = products.find((product) => product.id === cartItem.productId);
+        return cartItems.reduce<CartItem[]>((accumulated, cartItem) => {
+            const foundProduct: Product | undefined = products.find(
+                (product) => product.id === cartItem.productId
+            );
             if (foundProduct) {
                 const newCartItem: CartItem = {
                     ...cartItem,
                     productName: foundProduct.productName,
-                    total: foundProduct.price * cartItem.amount,
+                    total:
+                        typeof foundProduct.price !== 'undefined'
+                            ? foundProduct.price * cartItem.amount
+                            : 0,
                 };
                 return [...accumulated, newCartItem];
             }
@@ -83,13 +66,17 @@ const getHasCartItems = createSelector(getCartItemsAmount, (amount) => {
     return amount > 0;
 });
 const getCartTotalPrice = createSelector(getCartItemsWithExtraData, (cartItemsWithExtra) =>
-    cartItemsWithExtra.reduce((previousValue: number, currentValue: CartItem) => {
-        return previousValue + currentValue.total;
+    cartItemsWithExtra.reduce<number>((previousValue: number, currentValue: CartItem) => {
+        if (typeof currentValue.total !== 'undefined') {
+            return previousValue + currentValue.total;
+        }
+        return previousValue;
     }, 0)
 );
+
 const getUserFeatureState = createFeatureSelector<UserState>(featureKeyUser);
 const getPermissions = createSelector(getUserFeatureState, (state) => state.permissions);
-const getDetailTitle = createSelector(getPermissions, getCurrentProduct, (permissions, product) => {
+const getDetailTitle = createSelector(getPermissions, getSelectedProduct, (permissions, product) => {
     if (permissions.canUpdateProducts) {
         return product && product.id ? 'Edit Product' : 'Create Product';
     }
@@ -97,10 +84,10 @@ const getDetailTitle = createSelector(getPermissions, getCurrentProduct, (permis
 });
 
 export class ProductStoreFacade {
+    // STATE OBSERVABLES
     displayCode$: Observable<boolean> = store.select(getShowProductCode);
-    selectedProduct$: Observable<Product> = store.select(getCurrentProduct);
+    selectedProduct$: Observable<Product | undefined> = store.select(getSelectedProduct);
     products$: Observable<Product[]> = store.select(getFilteredProducts);
-    errorMessage$: Observable<string> = store.select(getError);
     search$: Observable<string> = store.select(getSearch);
     cartItems$: Observable<CartItem[]> = store.select(getCartItemsWithExtraData);
     cartItemsAmount$: Observable<number> = store.select(getCartItemsAmount);
@@ -124,14 +111,14 @@ export class ProductStoreFacade {
     }
 
     newProduct(): void {
-        store.dispatch(initializeCurrentProduct());
+        store.dispatch(initializeNewProduct());
     }
 
     selectProduct(product: Product): void {
-        store.dispatch(setCurrentProduct(product));
+        store.dispatch(selectProduct(product));
     }
 
-    clearProduct(): void {
+    clearCurrentProduct(): void {
         store.dispatch(clearCurrentProduct());
     }
 
@@ -144,7 +131,7 @@ export class ProductStoreFacade {
     }
 
     delete(product: Product): void {
-        store.dispatch(deleteProduct(product.id));
+        store.dispatch(deleteProduct(product.id!));
     }
 
     updateSearch(search: string) {
@@ -152,11 +139,11 @@ export class ProductStoreFacade {
     }
 
     addProductToCart(product: Product) {
-        store.dispatch(addProductToCart(product.id));
+        store.dispatch(addProductToCart(product.id!));
     }
 
     removeProductFromCart(cartItem: CartItem) {
-        store.dispatch(removeProductFromCart(cartItem.productId));
+        store.dispatch(removeProductFromCart(cartItem.productId!));
     }
 }
 

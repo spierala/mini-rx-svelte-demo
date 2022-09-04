@@ -4,24 +4,19 @@ import { catchError, map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import { apiBasePath } from '../../../environment';
 import { toasterSuccess } from '../../../toaster';
-import { handleError } from '../../../utils';
+import { altKeyPressed$, handleError } from '../../../utils';
 
 const todoApiUrl = apiBasePath + '/todos/';
 const failingTodoApiUrl = apiBasePath + '/todos-method-not-allowed/';
 let apiUrl = todoApiUrl;
 
-window.onkeyup = function (e) {
-    updateApiUrl(e.altKey);
-};
-window.onkeydown = function (e) {
-    updateApiUrl(e.altKey);
-};
+altKeyPressed$.subscribe(updateApiUrl);
 
 function updateApiUrl(altKeyPressed: boolean) {
     apiUrl = altKeyPressed ? failingTodoApiUrl : todoApiUrl;
 }
 
-export class TodosApiService {
+export class TodoApiService {
     constructor() {}
 
     getTodos(): Observable<Todo[]> {

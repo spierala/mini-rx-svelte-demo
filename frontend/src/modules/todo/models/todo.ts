@@ -1,7 +1,8 @@
 export class Todo {
-    id: number;
+    id: number | undefined;
     title: string = '';
     isDone: boolean = false;
-    isBusiness: boolean = false;
-    isPrivate: boolean = false;
+    isBusiness?: boolean;
+    isPrivate?: boolean;
+    tempId?: string;
 }

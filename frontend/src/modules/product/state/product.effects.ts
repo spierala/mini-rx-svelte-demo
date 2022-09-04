@@ -1,7 +1,7 @@
 import { from, of } from 'rxjs';
 import { catchError, map, mergeMap, startWith } from 'rxjs/operators';
 
-import { Action, undo, actions$ } from 'mini-rx-store';
+import { Action, undo, actions$, mapResponse } from 'mini-rx-store';
 import { ofType, toPayload } from 'ts-action-operators';
 import {
     createProduct,
@@ -19,7 +19,7 @@ import {
     updateProductSuccess,
 } from './product.actions';
 import { Product } from '../models/product';
-import productsApiService from '../services/products-api.service';
+import productApiService from '../services/product-api.service';
 import { store } from '../../../stores';
 
 export class ProductEffects {
@@ -33,22 +33,27 @@ export class ProductEffects {
     loadProducts$ = actions$.pipe(
         ofType(load),
         mergeMap((action) =>
-            productsApiService.getProducts().pipe(
-                map((products) => loadSuccess(products)),
-                catchError((err) => of(loadFail(err)))
+            productApiService.getProducts().pipe(
+                mapResponse(
+                    (products) => loadSuccess(products),
+                    (error) => loadFail(error)
+                )
             )
         )
     );
 
+    // Effect with optimistic update and undo
     updateProduct$ = actions$.pipe(
         ofType(updateProduct),
         toPayload(),
         mergeMap((product) => {
             const optimisticUpdateAction: Action = updateProductOptimistic(product);
 
-            return productsApiService.updateProduct(product).pipe(
-                map((updatedProduct) => updateProductSuccess(updatedProduct)),
-                catchError((err) => from([updateProductFail(err), undo(optimisticUpdateAction)])),
+            return productApiService.updateProduct(product).pipe(
+                mapResponse(
+                    (updatedProduct) => updateProductSuccess(updatedProduct),
+                    (err) => [updateProductFail(err), undo(optimisticUpdateAction)]
+                ),
                 startWith(optimisticUpdateAction)
             );
         })
@@ -58,9 +63,11 @@ export class ProductEffects {
         ofType(createProduct),
         toPayload(),
         mergeMap((product: Product) =>
-            productsApiService.createProduct(product).pipe(
-                map((newProduct) => createProductSuccess(newProduct)),
-                catchError((err) => of(createProductFail(err)))
+            productApiService.createProduct(product).pipe(
+                mapResponse(
+                    (newProduct) => createProductSuccess(newProduct),
+                    (err) => createProductFail(err)
+                )
             )
         )
     );
@@ -69,9 +76,11 @@ export class ProductEffects {
         ofType(deleteProduct),
         toPayload(),
         mergeMap((productId: number) =>
-            productsApiService.deleteProduct(productId).pipe(
-                map(() => deleteProductSuccess(productId)),
-                catchError((err) => of(deleteProductFail(err)))
+            productApiService.deleteProduct(productId).pipe(
+                mapResponse(
+                    () => deleteProductSuccess(productId),
+                    (err) => deleteProductFail(err)
+                )
             )
         )
     );

@@ -3,6 +3,13 @@
     import { Filter } from '../models/filter';
 
     export let filter: Filter;
+
+    function updateFilter(newFilter: Partial<Filter>) {
+        todoStore.updateFilter({
+            ...filter,
+            ...newFilter,
+        });
+    }
 </script>
 
 <form class="d-flex m-0">
@@ -11,7 +18,7 @@
             type="text"
             class="form-control form-control-sm"
             placeholder="Search todos"
-            on:input={(e) => todoStore.search(e.target.value)}
+            on:input={(e) => updateFilter({ search: e.target.value })}
         />
     </div>
     <div class="d-flex align-items-center">
@@ -20,8 +27,13 @@
                 class="form-check-input"
                 type="checkbox"
                 id="filterIsPrivate"
-                bind:checked={filter.category.isPrivate}
-                on:change={() => todoStore.toggleIsPrivate()}
+                on:change={() =>
+                    updateFilter({
+                        category: {
+                            isBusiness: filter.category.isBusiness,
+                            isPrivate: !filter.category.isPrivate,
+                        },
+                    })}
             />
             <label class="form-check-label font-weight-bold text-primary" for="filterIsPrivate">
                 Private
@@ -32,8 +44,13 @@
                 class="form-check-input"
                 type="checkbox"
                 id="filterIsBusiness"
-                bind:checked={filter.category.isBusiness}
-                on:change={() => todoStore.toggleIsBusiness()}
+                on:change={() =>
+                    updateFilter({
+                        category: {
+                            isBusiness: !filter.category.isBusiness,
+                            isPrivate: filter.category.isPrivate,
+                        },
+                    })}
             />
             <label class="form-check-label font-weight-bold text-info" for="filterIsBusiness">
                 Business
