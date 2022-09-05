@@ -2,8 +2,6 @@ import { Observable } from 'rxjs';
 import { FeatureStore } from 'mini-rx-store';
 import { onDestroy } from 'svelte';
 
-let id = 1;
-
 interface CounterState {
     count: number;
 }
@@ -16,7 +14,7 @@ export class CounterStore extends FeatureStore<CounterState> {
     count$: Observable<number> = this.select((state) => state.count);
 
     constructor() {
-        super('counter-' + id++, initialState);
+        super('counter', initialState, {multi: true});
 
         onDestroy(() => {
             this.destroy();
