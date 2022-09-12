@@ -1,4 +1,4 @@
-export class Filter {
+export class TodoFilter {
     search: string;
     category: {
         isBusiness: boolean;

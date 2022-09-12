@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { todoStore } from '../state/todo.store';
-    import { Filter } from '../models/filter';
+    import { TodoFilter } from '../models/todoFilter';
+    import { createEventDispatcher } from 'svelte';
 
-    export let filter: Filter;
+    export let filter: TodoFilter;
 
-    function updateFilter(newFilter: Partial<Filter>) {
-        todoStore.updateFilter({
+    const dispatch = createEventDispatcher<{updateFilter: TodoFilter}>();
+
+    function updateFilter(newFilter: TodoFilter) {
+        dispatch('updateFilter', {
             ...filter,
             ...newFilter,
         });

@@ -13,6 +13,9 @@
 
     const routes = {
         '/': wrap({
+            asyncComponent: () => import('./modules/todos-simple/components/todos-simple-shell.svelte'),
+        }),
+        '/todos': wrap({
             asyncComponent: () => import('./modules/todo/components/todo-shell.svelte'),
         }),
         '/products': wrap({
@@ -27,6 +30,14 @@
         '/user': UserShell,
     };
 </script>
+
+<style>
+    .bi-person-circle,
+    .bi-cart-fill {
+        font-size: 20px;
+        display: inline-flex;
+    }
+</style>
 
 <body>
     <div class="w-100 h-100 d-flex flex-column">
@@ -43,6 +54,11 @@
             <ul class="d-flex flex-grow-1 navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="/" use:link use:active={{ className: 'active' }}>
+                        Todos Simple
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/todos" use:link use:active={{ className: 'active' }}>
                         Todos
                     </a>
                 </li>

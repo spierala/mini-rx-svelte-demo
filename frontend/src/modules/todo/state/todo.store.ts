@@ -1,6 +1,6 @@
-import { Todo } from '../models/todo';
-import { Filter } from '../models/filter';
-import { Observable } from 'rxjs';
+import { Todo } from '../../todos-shared/models/todo';
+import { TodoFilter } from '../../todos-shared/models/todoFilter';
+import { Observable, pipe } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import {
     Action,
@@ -9,13 +9,13 @@ import {
     FeatureStore,
     tapResponse,
 } from 'mini-rx-store';
-import { TodoApiService } from '../services/todo-api.service';
+import { TodoApiService } from '../../todos-shared/services/todo-api.service';
 import { v4 as uuid } from 'uuid';
 
 // STATE INTERFACE
 interface TodoState {
     todos: Todo[];
-    filter: Filter;
+    filter: TodoFilter;
     selectedTodo: Todo | undefined;
 }
 
@@ -59,7 +59,7 @@ class TodoStore extends FeatureStore<TodoState> {
     // STATE OBSERVABLES
     todosDone$: Observable<Todo[]> = this.select(getTodosDone);
     todosNotDone$: Observable<Todo[]> = this.select(getTodosNotDone);
-    filter$: Observable<Filter> = this.select(getFilter);
+    filter$: Observable<TodoFilter> = this.select(getFilter);
     selectedTodo$: Observable<Todo | undefined> = this.select(getSelectedTodo);
 
     constructor() {
@@ -88,7 +88,7 @@ class TodoStore extends FeatureStore<TodoState> {
         );
     }
 
-    updateFilter(filter: Filter) {
+    updateFilter(filter: TodoFilter) {
         this.setState(
             (state) => ({
                 filter: {
@@ -101,9 +101,9 @@ class TodoStore extends FeatureStore<TodoState> {
     }
 
     // API CALLS...
-    // ...with effect
-    load = this.effect((payload$) => {
-        return payload$.pipe(
+    // Effect using the RxJS standalone pipe
+    load = this.effect<void>(
+        pipe(
             mergeMap(() =>
                 apiService.getTodos().pipe(
                     tapResponse(
@@ -114,16 +114,16 @@ class TodoStore extends FeatureStore<TodoState> {
                     )
                 )
             )
-        );
-    });
+        )
+    );
 
-    // ... with effect (and optimistic update / undo)
+    // Effect + optimistic update / undo
+    // We can skip the standalone pipe when using just one RxJS operator
     create = this.effect<Todo>(
-        // FYI: we can skip the payload$.pipe when using just one RxJS operator
         mergeMap((todo) => {
             const optimisticUpdate: Action = this.setState((state) => {
                 // Create a new Todo object to prevent the Immutable Extension from making the current form model immutable
-                // This is only a concern if the create call fails (which would return a new Todo object)
+                // This is only a concern if the create call fails (A successful create call would return a new Todo object)
                 const newTodo: Todo = { ...todo };
                 return {
                     todos: [...state.todos, newTodo],
@@ -131,8 +131,8 @@ class TodoStore extends FeatureStore<TodoState> {
             }, 'createOptimistic');
 
             return apiService.createTodo(todo).pipe(
-                tapResponse({
-                    next: (createdTodo) => {
+                tapResponse(
+                    (createdTodo) => {
                         this.setState(
                             (state) => ({
                                 todos: state.todos.map((item) =>
@@ -143,16 +143,16 @@ class TodoStore extends FeatureStore<TodoState> {
                             'createSuccess'
                         );
                     },
-                    error: (err) => {
+                    (err) => {
                         console.error(err);
                         this.undo(optimisticUpdate);
-                    },
-                })
+                    }
+                )
             );
         })
     );
 
-    // ...with subscribe (and optimistic update / undo)
+    // Classic subscribe + optimistic update / undo
     update(todo: Todo) {
         const optimisticUpdate: Action = this.setState(
             (state) => ({
@@ -177,7 +177,7 @@ class TodoStore extends FeatureStore<TodoState> {
         });
     }
 
-    // ...with subscribe (and optimistic update / undo)
+    // Classic subscribe and optimistic update / undo
     delete(todo: Todo) {
         const optimisticUpdate: Action = this.setState(
             (state) => ({

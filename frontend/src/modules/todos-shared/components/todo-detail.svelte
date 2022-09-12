@@ -1,23 +1,25 @@
 <script lang="ts">
     import { Todo } from '../models/todo';
-    import { todoStore } from '../state/todo.store';
+    import { createEventDispatcher } from 'svelte';
 
     export let todo: Todo;
 
+    const dispatch = createEventDispatcher<{create: Todo, update: Todo, delete: Todo, close: void}>();
+
     function onSubmit() {
         if (todo.id) {
-            todoStore.update(todo);
+            dispatch('update', todo);
         } else {
-            todoStore.create(todo);
+            dispatch('create', todo);
         }
     }
 
     function deleteTodo() {
-        todoStore.delete(todo);
+        dispatch('delete', todo);
     }
 
     function close() {
-        todoStore.clearSelectedTodo();
+        dispatch('close');
     }
 </script>
 

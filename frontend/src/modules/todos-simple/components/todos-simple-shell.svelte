@@ -2,64 +2,58 @@
     import TodoDetail from '../../todos-shared/components/todo-detail.svelte';
     import TodoFilter from '../../todos-shared/components/todo-filter.svelte';
     import TodoList from '../../todos-shared/components/todo-list.svelte';
-    import { todoStore } from '../state/todo.store';
+    import { todoSimpleStore } from '../state/todo.store';
     import { cloneDeep } from 'lodash-es';
     import { map } from 'rxjs/operators';
     import { Todo } from '../../todos-shared/models/todo';
     import { TodoFilter } from '../../todos-shared/models/todoFilter';
 
-    const todosDone$ = todoStore.todosDone$;
-    const todosNotDone$ = todoStore.todosNotDone$;
-    const selectedTodo$ = todoStore.selectedTodo$.pipe(
+    const todosDone$ = todoSimpleStore.todosDone$;
+    const todosNotDone$ = todoSimpleStore.todosNotDone$;
+    const selectedTodo$ = todoSimpleStore.selectedTodo$.pipe(
         map(cloneDeep) // Prevent mutating the state
     );
-    const filter$ = todoStore.filter$.pipe(
+    const filter$ = todoSimpleStore.filter$.pipe(
         map(cloneDeep) // Prevent mutating the state
     );
 
     function selectTodo(event: CustomEvent<Todo>) {
-        todoStore.selectTodo(event.detail);
+        todoSimpleStore.selectTodo(event.detail);
     }
 
     function addTodo() {
-        todoStore.initNewTodo();
+        todoSimpleStore.initNewTodo();
     }
 
     function createTodo(event: CustomEvent<Todo>) {
-        todoStore.create(event.detail);
+        todoSimpleStore.create(event.detail);
     }
 
     function updateTodo(event: CustomEvent<Todo>) {
-        todoStore.update(event.detail);
+        todoSimpleStore.update(event.detail);
     }
 
     function deleteTodo(event: CustomEvent<Todo>) {
-        todoStore.delete(event.detail);
+        todoSimpleStore.delete(event.detail);
     }
 
     function closeTodo() {
-        todoStore.clearSelectedTodo();
+        todoSimpleStore.clearSelectedTodo();
     }
 
     function updateFilter(event: CustomEvent<TodoFilter>) {
-        todoStore.updateFilter(event.detail)
+        todoSimpleStore.updateFilter(event.detail)
     }
 </script>
 
 <div class="d-flex flex-column h-100">
-    <nav class="navbar navbar-light bg-light mb-1">
-        <span class="navbar-brand">Todos</span>
+    <nav class="navbar navbar-light bg-light mb-4">
+        <span class="navbar-brand">Todos Simple</span>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <button class="btn btn-primary btn-sm" on:click={addTodo}>New</button>
             <TodoFilter filter={$filter$} on:updateFilter={updateFilter}/>
         </div>
     </nav>
-
-    <div class="m-3 alert alert-info d-flex align-items-center" role="alert">
-        <i class="info-icon bi bi-info-circle-fill" />
-        The todos are updated optimistically. Press the ALT key while saving or deleting a todo to simulate
-        an API error: The optimistic update will be rolled back.
-    </div>
 
     <div class="container">
         <div class="row">

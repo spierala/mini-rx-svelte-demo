@@ -5,12 +5,10 @@
     export let todos: Todo[];
     export let selectedTodo: Todo;
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher<{selectTodo: Todo}>();
 
     function selectTodo(todo: Todo) {
-        dispatch('selectTodo', {
-            todo,
-        });
+        dispatch('selectTodo', todo);
     }
 </script>
 
