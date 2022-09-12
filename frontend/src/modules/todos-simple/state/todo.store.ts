@@ -9,7 +9,7 @@ import {
     FeatureStore,
     tapResponse,
 } from 'mini-rx-store';
-import { TodoApiService } from '../../todos-shared/services/todo-api.service';
+import { TodosApiService } from '../../todos-shared/services/todos-api.service';
 import { v4 as uuid } from 'uuid';
 
 // STATE INTERFACE
@@ -32,7 +32,7 @@ const initialState: TodosState = {
     },
 };
 
-const apiService: TodoApiService = new TodoApiService();
+const apiService: TodosApiService = new TodosApiService();
 
 export class TodosSimpleStore extends FeatureStore<TodosState> {
     // STATE OBSERVABLES

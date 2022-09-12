@@ -16,7 +16,7 @@ function updateApiUrl(altKeyPressed: boolean) {
     apiUrl = altKeyPressed ? failingProductApiUrl : productApiUrl;
 }
 
-class ProductApiService {
+export class ProductsApiService {
     constructor() {}
 
     getProducts(): Observable<Product[]> {
@@ -51,5 +51,3 @@ class ProductApiService {
         );
     }
 }
-
-export default new ProductApiService();

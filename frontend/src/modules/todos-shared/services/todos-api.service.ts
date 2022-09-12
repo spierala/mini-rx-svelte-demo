@@ -16,7 +16,7 @@ function updateApiUrl(altKeyPressed: boolean) {
     apiUrl = altKeyPressed ? failingTodoApiUrl : todoApiUrl;
 }
 
-export class TodoApiService {
+export class TodosApiService {
     constructor() {}
 
     getTodos(): Observable<Todo[]> {

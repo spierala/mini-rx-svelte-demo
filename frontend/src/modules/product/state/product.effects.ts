@@ -18,8 +18,10 @@ import {
     updateProductSuccess,
 } from './product.actions';
 import { Product } from '../models/product';
-import productApiService from '../services/product-api.service';
 import { store } from '../../../stores';
+import { ProductsApiService } from '../services/product-api.service';
+
+const productApiService = new ProductsApiService();
 
 export class ProductEffects {
     constructor() {
@@ -41,6 +43,19 @@ export class ProductEffects {
         )
     );
 
+    createProduct$ = actions$.pipe(
+        ofType(createProduct),
+        toPayload(),
+        mergeMap((product: Product) =>
+            productApiService.createProduct(product).pipe(
+                mapResponse(
+                    (newProduct) => createProductSuccess(newProduct),
+                    (err) => createProductFail(err)
+                )
+            )
+        )
+    );
+
     // Effect with optimistic update and undo
     updateProduct$ = actions$.pipe(
         ofType(updateProduct),
@@ -56,19 +71,6 @@ export class ProductEffects {
                 startWith(optimisticUpdateAction)
             );
         })
-    );
-
-    createProduct$ = actions$.pipe(
-        ofType(createProduct),
-        toPayload(),
-        mergeMap((product: Product) =>
-            productApiService.createProduct(product).pipe(
-                mapResponse(
-                    (newProduct) => createProductSuccess(newProduct),
-                    (err) => createProductFail(err)
-                )
-            )
-        )
     );
 
     deleteProduct$ = actions$.pipe(
