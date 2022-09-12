@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { productStoreFacade } from '../../product/state/product-store.facade';
-    import { CartItem } from '../../product/models/cart-item';
+    import { productStoreFacade } from '../../products/state/product-store.facade';
+    import { CartItem } from '../../products/models/cart-item';
     import { Observable } from 'rxjs';
 
     const cartItems$: Observable<CartItem[]> = productStoreFacade.cartItems$;
