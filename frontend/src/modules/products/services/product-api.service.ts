@@ -4,11 +4,19 @@ import { catchError, map } from 'rxjs/operators';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 import { apiBasePath } from '../../../environment';
 import { toasterSuccess } from '../../../toaster';
-import { handleError } from '../../../utils';
+import { altKeyPressed$, handleError } from '../../../utils';
 
-const apiUrl = apiBasePath + '/products/';
+const productApiUrl = apiBasePath + '/products/';
+const failingProductApiUrl = apiBasePath + '/products-not-ok';
+let apiUrl = productApiUrl;
 
-class ProductsApiService {
+altKeyPressed$.subscribe(updateApiUrl);
+
+function updateApiUrl(altKeyPressed: boolean) {
+    apiUrl = altKeyPressed ? failingProductApiUrl : productApiUrl;
+}
+
+export class ProductsApiService {
     constructor() {}
 
     getProducts(): Observable<Product[]> {
@@ -43,5 +51,3 @@ class ProductsApiService {
         );
     }
 }
-
-export default new ProductsApiService();

@@ -1,26 +1,48 @@
 <script lang="ts">
-    import TodoDetail from './todo-detail.svelte';
-    import TodoFilter from './todo-filter.svelte';
-    import TodoList from './todo-list.svelte';
+    import TodoDetail from '../../todos-shared/components/todo-detail.svelte';
+    import TodoFilter from '../../todos-shared/components/todo-filter.svelte';
+    import TodoList from '../../todos-shared/components/todo-list.svelte';
     import { todoStore } from '../state/todo.store';
-    import clonedeep from 'lodash.clonedeep';
+    import { cloneDeep } from 'lodash-es';
     import { map } from 'rxjs/operators';
+    import { Todo } from '../../todos-shared/models/todo';
+    import { TodoFilter } from '../../todos-shared/models/todoFilter';
 
     const todosDone$ = todoStore.todosDone$;
     const todosNotDone$ = todoStore.todosNotDone$;
     const selectedTodo$ = todoStore.selectedTodo$.pipe(
-        map(clonedeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent mutating the state
     );
     const filter$ = todoStore.filter$.pipe(
-        map(clonedeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent mutating the state
     );
 
-    function selectTodo(event) {
-        todoStore.selectTodo(event.detail.todo);
+    function selectTodo(event: CustomEvent<Todo>) {
+        todoStore.selectTodo(event.detail);
     }
 
     function addTodo() {
         todoStore.initNewTodo();
+    }
+
+    function createTodo(event: CustomEvent<Todo>) {
+        todoStore.create(event.detail);
+    }
+
+    function updateTodo(event: CustomEvent<Todo>) {
+        todoStore.update(event.detail);
+    }
+
+    function deleteTodo(event: CustomEvent<Todo>) {
+        todoStore.delete(event.detail);
+    }
+
+    function closeTodo() {
+        todoStore.clearSelectedTodo();
+    }
+
+    function updateFilter(event: CustomEvent<TodoFilter>) {
+        todoStore.updateFilter(event.detail)
     }
 </script>
 
@@ -29,7 +51,7 @@
         <span class="navbar-brand">Todos</span>
         <div class="d-flex flex-grow-1 mb-2 justify-content-between mt-2">
             <button class="btn btn-primary btn-sm" on:click={addTodo}>New</button>
-            <TodoFilter filter={$filter$} />
+            <TodoFilter filter={$filter$} on:updateFilter={updateFilter}/>
         </div>
     </nav>
 
@@ -67,7 +89,12 @@
             </div>
             {#if $selectedTodo$}
                 <div class="col">
-                    <TodoDetail todo={$selectedTodo$} />
+                    <TodoDetail todo={$selectedTodo$}
+                                on:create={createTodo}
+                                on:update={updateTodo}
+                                on:delete={deleteTodo}
+                                on:close={closeTodo}
+                    />
                 </div>
             {/if}
         </div>

@@ -5,7 +5,7 @@
     import { wrap } from 'svelte-spa-router/wrap';
     import UserShell from './modules/user/components/user-shell.svelte';
     import { Observable } from 'rxjs';
-    import { productStoreFacade } from './modules/product/state/product-store.facade';
+    import { productStoreFacade } from './modules/products/state/product-store.facade';
     import { SvelteToast } from '@zerodevx/svelte-toast';
 
     const cartItemsAmount$: Observable<number> = productStoreFacade.cartItemsAmount$;
@@ -13,10 +13,13 @@
 
     const routes = {
         '/': wrap({
-            asyncComponent: () => import('./modules/todo/components/todo-shell.svelte'),
+            asyncComponent: () => import('./modules/todos-simple/components/todos-simple-shell.svelte'),
+        }),
+        '/todos': wrap({
+            asyncComponent: () => import('./modules/todos/components/todos-shell.svelte'),
         }),
         '/products': wrap({
-            asyncComponent: () => import('./modules/product/components/product-shell.svelte'),
+            asyncComponent: () => import('./modules/products/components/products-shell.svelte'),
         }),
         '/cart': wrap({
             asyncComponent: () => import('./modules/cart/components/cart-list.svelte'),
@@ -27,6 +30,14 @@
         '/user': UserShell,
     };
 </script>
+
+<style>
+    .bi-person-circle,
+    .bi-cart-fill {
+        font-size: 20px;
+        display: inline-flex;
+    }
+</style>
 
 <body>
     <div class="w-100 h-100 d-flex flex-column">
@@ -43,6 +54,11 @@
             <ul class="d-flex flex-grow-1 navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="/" use:link use:active={{ className: 'active' }}>
+                        Todos Simple
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/todos" use:link use:active={{ className: 'active' }}>
                         Todos
                     </a>
                 </li>

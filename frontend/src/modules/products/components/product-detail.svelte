@@ -16,7 +16,7 @@
     }
 
     function onClose() {
-        productStoreFacade.clearProduct();
+        productStoreFacade.clearCurrentProduct();
     }
 
     function onDelete() {
