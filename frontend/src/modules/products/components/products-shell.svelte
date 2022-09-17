@@ -12,7 +12,7 @@
 
     const products$: Observable<Product[]> = productStoreFacade.products$;
     const selectedProduct$: Observable<Product> = productStoreFacade.selectedProduct$.pipe(
-        map(cloneDeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent product-detail from mutating the state
     );
     const permissions$: Observable<Permissions> = userStore.permissions$;
     const search$: Observable<string> = productStoreFacade.search$;

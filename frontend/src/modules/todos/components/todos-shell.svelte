@@ -11,11 +11,9 @@
     const todosDone$ = todoStore.todosDone$;
     const todosNotDone$ = todoStore.todosNotDone$;
     const selectedTodo$ = todoStore.selectedTodo$.pipe(
-        map(cloneDeep) // Prevent mutating the state
+        map(cloneDeep) // Prevent todo-detail from mutating the state
     );
-    const filter$ = todoStore.filter$.pipe(
-        map(cloneDeep) // Prevent mutating the state
-    );
+    const filter$ = todoStore.filter$;
 
     function selectTodo(event: CustomEvent<Todo>) {
         todoStore.selectTodo(event.detail);
