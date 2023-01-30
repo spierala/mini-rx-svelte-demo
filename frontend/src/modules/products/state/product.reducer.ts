@@ -81,7 +81,7 @@ export const productReducer = reducer<ProductState>(
     on(deleteProductSuccess, (state, { payload }) => ({
         ...state,
         products: state.products.filter((product) => product.id !== payload),
-        currentProductId: undefined,
+        selectedProduct: undefined,
     })),
     on(updateSearch, (state, { payload }) => ({
         ...state,

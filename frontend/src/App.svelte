@@ -27,6 +27,9 @@
         '/counter': wrap({
             asyncComponent: () => import('./modules/counter/components/counter-shell.svelte'),
         }),
+        '/art': wrap({
+            asyncComponent: () => import('./modules/pixel-art/components/pixel-art-shell.svelte'),
+        }),
         '/user': UserShell,
     };
 </script>
@@ -67,28 +70,35 @@
                         class="nav-link"
                         href="/products"
                         use:link
-                        use:link
                         use:active={{ className: 'active' }}
                     >
                         Products
                     </a>
                 </li>
-                <li class="nav-item  mr-auto">
+                <li class="nav-item">
                     <a
                         class="nav-link"
                         href="/counter"
                         use:link
-                        use:link
                         use:active={{ className: 'active' }}
                     >
-                        Counter
+                        Counters
+                    </a>
+                </li>
+                <li class="nav-item mr-auto">
+                    <a
+                            class="nav-link"
+                            href="/art"
+                            use:link
+                            use:active={{ className: 'active' }}
+                    >
+                        Pixel Art
                     </a>
                 </li>
                 <li class="nav-item">
                     <a
                         class="nav-link d-flex align-items-center"
                         href="/user"
-                        use:link
                         use:link
                         use:active={{ className: 'active' }}
                     >
@@ -100,7 +110,6 @@
                     <a
                         class="nav-link d-flex align-items-center"
                         href="/cart"
-                        use:link
                         use:link
                         use:active={{ className: 'active' }}
                     >
