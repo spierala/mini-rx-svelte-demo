@@ -33,7 +33,7 @@
   "dependencies": {
     "@zerodevx/svelte-toast": "^0.6.1",
     "lodash-es": "^4.17.21",
-    "mini-rx-store": "^5.0.0-alpha.0",
+    "mini-rx-store": "^5.0.0-alpha.1",
     "rxjs": "^7.5.6",
     "sirv-cli": "^1.0.14",
     "svelte-spa-router": "^3.2.0",
